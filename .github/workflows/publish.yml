@@ -26,6 +26,9 @@ jobs:
         uses: r-lib/actions/setup-renv@v2
         with:
           cache-version: 1
+          
+      - name: Import data
+        run:  Rscript -e 'source("etl.R")'
 
       - name: Render and Publish
         uses: quarto-dev/quarto-actions/publish@v2
@@ -33,3 +36,5 @@ jobs:
           target: gh-pages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PROJECT_KEY: ${{ secrets.PROJECT_KEY }}
+          API_KEY: ${{ secrets.API_KEY }}
