@@ -7,13 +7,15 @@ website:
     left:
       - href: index.qmd
         text: Home
+        icon: house-door
       - about.qmd
+    page-footer: "An R Quarto Website"
 
 format:
   html:
-    theme: cosmo
-    css: styles.css
+    theme: [cosmo, styles.scss]
     toc: true
+    page-layout: full
 
 editor: visual
 
