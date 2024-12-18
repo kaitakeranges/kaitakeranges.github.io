@@ -2,48 +2,21 @@
 title: "kaitakeranges.github.io"
 ---
 
-:::: image-text-box
-![](KTrust.png){.rounded-image}</img>
+::::: {.image-text-box}
 
-::: text-content
-<h2 style="text-align:centre;">
+:::: {.img}
+<img src="KTrust.png" width="450px" class="rounded-image"></img>
+::::
 
-Contents
-
-</h2>
-
-<ul type="dot">
-
-<li>
-
-<h5>About: The Why's, Where's, Who's and What's</h5>
-
-</li>
-
-<li>
-
-<h5>Trap Status: Statistics from the traps managed</h5>
-
-</li>
-
-<li>
-
-<h5>Post Poison Operation: A perspective of trap activity following aerial operation(s)</h5>
-
-</li>
-
-<li>
-
-<h5>Trap Line Summary: Current status at the trap line level</h5>
-
-</li>
-
-<li>
-
-<h5>Trapper Effort: A searchable summary on individual trapper effort</h5>
-
-</li>
-
+::: {.text-content}
+<h2 style="text-align:centre;">Contents</h2>
+<ul type = "dot">
+<li><h5>About: The Why's, Where's, Who's and What's</h5></li>
+<li><h5>Trap Status: Statistics from the traps managed</h5></li>
+<li><h5>Post Poison Operation: A perspective of trap activity following aerial operation(s)</h5></li>
+<li><h5>Trap Line Summary: Current status at the trap line level</h5></li>
+<li><h5>Trapper Effort: A searchable summary on individual trapper effort</h5></li>
 </ul>
 :::
-::::
+
+:::::

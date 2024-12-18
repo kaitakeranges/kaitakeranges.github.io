@@ -1,21 +1,22 @@
 project:
   type: website
+  
+  preview: 
+    port: 5999
 
 website:
   title: "kaitakeranges.github.io"
   navbar:
     left:
-      - href: index.qmd
-        text: Home
+      - text: "Home"
+        href: index.qmd
         icon: house-door
-      - about.qmd
-    page-footer: "An R Quarto Website"
+  page-footer: "An R Quarto Website"
 
 format:
   html:
-    theme: [cosmo, styles.scss]
+    theme:
+      - styles.scss
+      - cosmo
     toc: true
     page-layout: full
-
-editor: visual
-
