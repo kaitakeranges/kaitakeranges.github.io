@@ -19,7 +19,8 @@ df_trap_points <- do.call(rbind, lapply(df_trap_points_list$coordinates, functio
 
 df_trap_properties <- df_traps$features$properties # Parse the trap properties into a second dataframe
 
-df_trap_status <- cbind(df_trap_points, df_trap_properties) # Join coordinates to properties
+df_trap_status <- cbind(df_trap_points, df_trap_properties) %>% 
+  filter(project_id == 708466) # Join coordinates to properties
 saveRDS(df_trap_status, file = "df_trap_status.rds")
 
 date_trap_status <- as.Date(today())
@@ -31,18 +32,19 @@ rm("df_traps", "df_trap_points_list", "df_trap_points", "df_trap_properties") # 
 
 
 #### 2. df_trap_records ####
-# For this end point, you can specify a numner of records (max = 10,000) and a startindex.
-# So start with startindex of 0, then add 10,000 to this for each loop until the response != 200.
+# For this end point, you can specify a number of records (max = 10,000) and a startindex.
+# So start with startindex of 0, then add 5,000 to this for each loop until the response != 200.
 startindex <- readRDS("startindex.rds")
 base_url <- 'https://io.trap.nz/geo/trapnz-projects/wfs/'
-#end_url <- '?service=WFS&version=2.0.0&request=GetFeature&typeName=trapnz-projects:my-projects-trap-records&outputFormat=json' THIS RETURNS ALL PROJECTS THAT USER HAS ACCESS TO.
 end_url <- '?service=WFS&version=2.0.0&request=GetFeature&typeName=trapnz-projects:default-project-trap-records&outputFormat=json'
 url_records <- paste0(base_url, Sys.getenv("API_KEY"), '/', Sys.getenv("PROJECT_KEY"), end_url)
 if(is.null(startindex) || startindex == 0) {
   startindex <- 0
   rm(df_trap_records)
-} 
+}
+
 count <- 5000
+
 repeat {
   get_url <- paste0(url_records, "&count=", count, "&startindex=", startindex)
   df_raw <- GET(get_url)
@@ -58,6 +60,18 @@ repeat {
   }
   df_trap_properties <- df_raw_content$features$properties
   df_trap_properties <- df_trap_properties |> 
+    select(
+      record_id,
+      line,
+      trap_id,
+      trap_code,
+      trap_type,
+      strikes,
+      species_caught,
+      record_date,
+      recorded_by,
+      username
+    ) %>% 
     mutate(species_level_1 = 
              case_when(
                species_caught == "Rat - Ship" ~ "Rat",
@@ -82,6 +96,105 @@ repeat {
                TRUE ~ "Other"
              )
     ) |> 
+    mutate(Trapper = str_trim(coalesce(recorded_by, username))) |>
+    mutate(Trapper = case_when(
+      Trapper == "Brandon Arana Kingi" ~ "Brandon Kingi",
+      Trapper == "Jc" ~ "JC",
+      Trapper == "Vaughan scott Turner" ~ "Vaughan Turner",
+      Trapper == "tobyshanley" ~ "Toby Shanley",
+      Trapper == "rachatsea" ~ "Rachel Law",
+      Trapper == "Mark D." ~ "Mark Danenhauer",
+      Trapper == "John and Murray" ~ "John Freeman",
+      Trapper == "steve leach" ~ "Steve Leach",
+      Trapper == "Adrian van't Hof" ~ "Adrian Van't Hof",
+      Trapper == "Bazz" ~ "Baz",
+      Trapper == "Cameron B" ~ "Cameron Blencowe",
+      Trapper == "Jared Coombess" ~ "Jared Coombes",
+      Trapper == "Jared Coomes" ~ "Jared Coombes",
+      Trapper == "Adrian van’t Hof" ~ "Adrian Van’t Hof",
+      Trapper == "Tobyshanley" ~ "Toby Shanley",
+      Trapper == "Mholmes" ~ "Melissa Holmes",
+      Trapper == "MHolmes" ~ "Melissa Holmes",
+      Trapper == "Mellissa Holmes" ~ "Melissa Holmes",
+      Trapper == "hank reinders" ~ "Hank Reinders",
+      Trapper == "Hank reinders" ~ "Hank Reinders",
+      Trapper == "Janko" ~ "Janko Reinders",
+      Trapper == "jankoreinders" ~ "Janko Reinders",
+      Trapper == "Jackie keenan" ~ "Jackie Keenan",
+      Trapper == "Jackie" ~ "Jackie Keenan",
+      Trapper == "jackie keenan" ~ "Jackie Keenan",
+      Trapper == "Troy" ~ "Troy Bethell",
+      Trapper == "Troy Bethel" ~ "Troy Bethell",
+      Trapper == "plobb" ~ "Paul Lobb",
+      Trapper == "G Lilburn" ~ "Grant Lilburn",
+      Trapper == "grant lilburn" ~ "Grant Lilburn",
+      Trapper == "Stuartjulian" ~ "Stuart Julian",
+      Trapper == "StuartJulian" ~ "Stuart Julian",
+      Trapper == "shaunamoff" ~ "Shaun Moffitt",
+      Trapper == "mholmes" ~ "Melissa Holmes",
+      Trapper == "Robbie Mcgreggor" ~ "Robbie McGregor",
+      Trapper == "Robert Charles McGregor" ~ "Robbie McGregor",
+      Trapper == "Robert McGregor" ~ "Robbie McGregor",
+      Trapper == "Rob Mcgregor" ~ "Rob McGregor",
+      Trapper == "rob mcgregor" ~ "Rob McGregor",
+      Trapper == "Mark.danenhauer" ~ "Mark Danenhauer",
+      Trapper == "mark d" ~ "Mark Danenhauer",
+      Trapper == "mark d." ~ "Mark Danenhauer",
+      Trapper == "mark D." ~ "Mark Danenhauer",
+      Trapper == "Mark d." ~ "Mark Danenhauer",
+      Trapper == "atcullen45" ~ "Andy Cullen",
+      Trapper == "Mereana" ~ "Mereana Hanrahan",
+      Trapper == "Mereana Hanraan" ~ "Mereana Hanrahan",
+      Trapper == "Merean Hanrahan" ~ "Mereana Hanrahan",
+      Trapper == "john freeman" ~ "John Freeman",
+      Trapper == "john Freeman" ~ "John Freeman",
+      Trapper == "John freeman" ~ "John Freeman",
+      Trapper == "john fremman" ~ "John Freeman",
+      Trapper == "bazz" ~ "Baz",
+      Trapper == "johvel53@gmail.com" ~ "John Velvin",
+      Trapper == "bkingi" ~ "Brandon Kingi",
+      Trapper == "pete" ~ "Peter Morgan",
+      Trapper == "Pete" ~ "Peter Morgan",
+      Trapper == "Pete M" ~ "Pete Morgan",
+      Trapper == "Pete m" ~ "Pete Morgan",
+      Trapper == "Petemorgan" ~ "Pete Morgan",
+      Trapper == "pmorgan" ~ "Pete Morgan",
+      Trapper == "Pmorgan" ~ "Pete Morgan",
+      Trapper == "Peter Morgan" ~ "Pete Morgan",
+      Trapper == "Susan E" ~ "Susan Eagar",
+      Trapper == "Chania" ~ "Chania Hattle",
+      Trapper == "roger" ~ "Roger Jones",
+      Trapper == "Roger" ~ "Roger Jones",
+      Trapper == "R Jones" ~ "Roger Jones",
+      Trapper == "chania hattle" ~ "Chania Hattle",
+      Trapper == "nickbarm" ~ "Nick Armstrong",
+      Trapper == "tdixon" ~ "Toby Dixon",
+      Trapper == "Tdixon" ~ "Toby Dixon",
+      Trapper == "joash" ~ "Joash",
+      Trapper == "dave ferens" ~ "Dave Ferens",
+      Trapper == "liampaterson" ~ "Liam Paterson",
+      Trapper == "Liampaterson" ~ "Liam Paterson",
+      Trapper == "Liam" ~ "Liam Paterson",
+      Trapper == "martin m" ~ "Martin M",
+      Trapper == "spencer" ~ "Spencer Lister",
+      Trapper == "Spencer" ~ "Spencer Lister",
+      Trapper == "Robert m" ~ "Robert Morgan",
+      Trapper == "Robert morgan" ~ "Robert Morgan",
+      Trapper == "secampbellnz@gmail.com" ~ "Sarah Campbell",
+      Trapper == "Tom" ~ "Tom Ryder",
+      Trapper == "daryl" ~ "Daryl",
+      Trapper == "DARYL" ~ "Daryl",
+      Trapper == "Drayl" ~ "Daryl",
+      Trapper == "Tim" ~ "Tim Sjoberg",
+      Trapper == "stevefrancis" ~ "Steve Francis",
+      Trapper == "N Lightbourne" ~ "Nathan Lightbourne",
+      Trapper == "Ian" ~ "Ian Swan",
+      Trapper == "Samuel Mullin" ~ "Sam Mullin",
+      Trapper == "stevefrancis" ~ "Steve Francis",
+      Trapper == "Bryce" ~ "Bryce Vickers",
+      Trapper == "T Morris" ~ "Trevor Morris",
+      TRUE ~ Trapper
+    )) %>% 
     mutate(
       year = year(as.Date(record_date)),
       last_14_days = 
@@ -109,15 +222,68 @@ repeat {
   df_trap_point <- do.call(rbind, lapply(df_raw_content$features$geometry$coordinates, function(x) {
     data.frame(longitude = x[1], latitude = x[2])
   }))
+  
   df_trap_combined <- cbind(df_trap_point, df_trap_properties)
+  
   if(exists('df_trap_records') && is.data.frame(get('df_trap_records'))) {
     df_trap_records <- rbind(df_trap_records, df_trap_combined)
   } else {
     df_trap_records <- df_trap_combined
   }
   startindex <- startindex + count_records
-  #print(paste("startindex is now: ", startindex))
 }
 
 saveRDS(startindex, file = "startindex.rds")
 saveRDS(df_trap_records, file = "df_trap_records.rds")
+saveRDS(max(as.Date(df_trap_records$record_date)), file = "date_trap_status.rds")
+
+if(exists("df_raw")){rm("df_raw")}
+if(exists("df_raw_content")){rm("df_raw_content")}
+if(exists("df_trap_combined")){rm("df_trap_combined")}
+if(exists("df_trap_point")){rm("df_trap_point")}
+if(exists("df_trap_properties")){rm("df_trap_properties")}
+
+
+
+#### Create dataframe for trap table.
+df_trap_table <- df_trap_records |> 
+  filter(year > 2017) |> 
+  select(record_date, year, record_id, species_level_1, last_14_days, last_28_days, last_14_days_ly, last_28_days_ly)
+
+df_trap_table_1 <- df_trap_table |> 
+  group_by(year, species_level_1) |> 
+  summarise(count = n()) |> 
+  pivot_wider(names_from = species_level_1, values_from = count, values_fill = 0) |> 
+  mutate(period = as.character(year))
+
+df_trap_table_2_columns <- c("last_14_days", "last_28_days", "last_14_days_ly", "last_28_days_ly")
+
+df_trap_table_2 <- df_trap_table |> 
+  filter_at(vars(df_trap_table_2_columns), any_vars(. == 1)) |> 
+  pivot_longer(cols = df_trap_table_2_columns, names_to = "period", values_to = "flag") |> 
+  filter(flag == 1) |> 
+  group_by(period, species_level_1) |> 
+  summarise(count = n()) |> 
+  pivot_wider(names_from = species_level_1, values_from = count, values_fill = 0)
+
+df_trap_table_data <- rbind(df_trap_table_1, df_trap_table_2) |> 
+  select(-year) |> 
+  mutate(period = case_when(
+    period == "last_14_days" ~ "Last 2 Weeks",
+    period == "last_28_days" ~ "Last 4 Weeks",
+    period == "last_14_days_ly" ~ "Last 2 Weeks (last year)",
+    period == "last_28_days_ly" ~ "Last 4 Weeks (last year)",
+    TRUE ~ period
+  )) |> 
+  arrange(desc(period)) |> 
+  mutate_all((~replace(., is.na(.), 0))) |> 
+  mutate(across(Cat:Possum, ~format(., big.mark = ","))) |> 
+  arrange(factor(period, c("Last 2 Weeks", "Last 2 Weeks (last year)", "Last 4 Weeks", "Last 4 Weeks (last year)")))
+df_trap_table_data <- df_trap_table_data[, c("period", "None", "Rat", "Stoat", "Ferret", "Weasel", "Hedgehog", "Cat", "Other")]
+
+saveRDS(df_trap_table_data, file = "df_trap_table_data.rds")
+
+if(exists("df_trap_table")){rm("df_trap_table")}
+if(exists("df_trap_table_1")){rm("df_trap_table_1")}
+if(exists("df_trap_table_2")){rm("df_trap_table_2")}
+#### End of create dataframe for trap table

@@ -11,6 +11,9 @@ website:
       - text: "Home"
         href: index.qmd
         icon: house-door
+      - text: "Status"
+        href: status.qmd
+        icon: file-bar-graph
   page-footer: "An R Quarto Website"
 
 format:

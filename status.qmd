@@ -1,0 +1,32 @@
+---
+title: "Trap Line Summary and Status"
+subtitle: "`r paste('Latest trap record:', readRDS('date_trap_status.rds'))`"
+format: html
+---
+
+<h3>A Summary of catches by year, and also the last 2 and 4 weeks with comparison to the 2 and 4 week windows for the same time of year from the prior year.</h2>
+<hr style="border: 1px solid black;">
+
+```{r, setup, echo=FALSE}
+knitr::opts_chunk$set(fig.width = 8, collapse = TRUE)
+```
+
+```{r, summary_table, warning = FALSE, echo=FALSE}
+library(reactable)
+
+df_trap_table_data <- readRDS("df_trap_table_data.rds")
+
+reactable(df_trap_table_data,
+  resizable = TRUE,
+  defaultPageSize = 15,
+  defaultColDef = colDef(align = "right"),
+  columns = list(
+    period = colDef(name = "Period", minWidth = 160, align = "left")
+  ),
+  elementId = "tbl",
+  theme = reactableTheme(
+      style = list(fontFamily = "-system-ui", fontSize = 11, backgroundColor = "#047C90", color = "#d2e3f3")
+  )
+  )
+
+```
