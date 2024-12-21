@@ -12,5 +12,12 @@
     "title": "About",
     "section": "",
     "text": "About this site\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "status.html",
+    "href": "status.html",
+    "title": "Trap Line Summary and Status",
+    "section": "",
+    "text": "A Summary of catches by year, and also the last 2 and 4 weeks with comparison to the 2 and 4 week windows for the same time of year from the prior year."
   }
 ]
