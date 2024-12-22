@@ -14,6 +14,9 @@ website:
       - text: "Status"
         href: status.qmd
         icon: file-bar-graph
+      - text: "Trap Line Summary"
+        href: trapline.qmd
+        icon: table
   page-footer: "An R Quarto Website"
 
 format:

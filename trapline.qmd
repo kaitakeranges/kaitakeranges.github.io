@@ -1,0 +1,67 @@
+---
+title: "Trap Line Summary"
+subtitle: "`r paste('Last updated on:', readRDS('date_trap_status.rds'))`"
+format: html
+---
+
+This table gives some summary information for each trap within the trapping project.</br>
+You can use the search box below each column header to filter on a specific item (e.g. a specific trap line, trap, date or last species caught).</br>
+There is also a generic search box which will search any column.</br>
+</br>
+Clicking on any of the column headers will allow you to sort. Keep clicking to toggle between ascending or descending.</br>
+If you want to sort by more than one column, hold the shift button down when clicking any subsequent columns.</br>
+Keep holding the shift button down if you want to reverse the sort order.</br>
+</br>
+Examples on how you might use this table include;</br>
+<ul type = "dot">
+<li>Search for your trap line</li>
+<li>Sort by last species caught (or use the search filter again) to find which traps catch the most or least of any species</li>
+<li>Sort by last catch date to see which traps have caught recently and what species that was</li>
+<li>Sort by days since last catch to see which traps haven't had a recent catch</li>
+</ul>
+</br>
+You can expand the number of rows with the 'Show' drop down selection at the bottom of the table.</br>
+
+```{r, echo = FALSE}
+#| code-fold: true
+#| code-summary: "code"
+#| warning: false
+library(tidyverse)
+library(reactable)
+
+trap_line_table <- readRDS("trap_line_table.rds")
+
+reactable(
+    trap_line_table,
+    filterable = TRUE,
+    showPageSizeOptions = TRUE,
+    pageSizeOptions = c(10, 20, 50),
+    defaultPageSize = 20,
+    defaultColDef = colDef(align = "right"),
+    columns = list(
+        line = colDef(name = "Trap Line", minWidth = 140, align = "left"),
+        trap_code = colDef(name = "Code", align = "left"),
+        strikes = colDef(name = "Strikes"),
+        ave_days_between = colDef(name = "Avg Days Between Checks"),
+        last_catch = colDef(name = "Last Catch"),
+        last_species = colDef(name = "Last Species Caught"),
+        days_last_catch = colDef(name = "Days Since Last Catch")
+    ),
+    elementId = "tbl",
+    theme = reactableTheme(
+        style = list(
+            fontFamily = "-system-ui", 
+            fontSize = 11, 
+            backgroundColor = "#047C90", 
+            color = "#d2e3f3"),
+            selectStyle = list(
+                backgroundColor = "#047C90", 
+                color = "#d2e3f3"
+                ),
+            inputStyle = list(
+                color = "#047C90"
+            )
+  )
+)
+
+```

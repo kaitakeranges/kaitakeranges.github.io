@@ -31,7 +31,7 @@ rm("df_traps", "df_trap_points_list", "df_trap_points", "df_trap_properties") # 
 
 
 
-#### 2. df_trap_records ####
+# 2. df_trap_records ----
 # For this end point, you can specify a number of records (max = 10,000) and a startindex.
 # So start with startindex of 0, then add 5,000 to this for each loop until the response != 200.
 startindex <- readRDS("startindex.rds")
@@ -69,6 +69,7 @@ repeat {
       strikes,
       species_caught,
       record_date,
+      prev_record_date,
       recorded_by,
       username
     ) %>% 
@@ -245,7 +246,7 @@ if(exists("df_trap_properties")){rm("df_trap_properties")}
 
 
 
-#### Create dataframe for trap table.
+# Create dataframe for trap table ----
 df_trap_table <- df_trap_records |> 
   filter(year > 2017) |> 
   select(record_date, year, record_id, species_level_1, last_14_days, last_28_days, last_14_days_ly, last_28_days_ly)
@@ -286,4 +287,57 @@ saveRDS(df_trap_table_data, file = "df_trap_table_data.rds")
 if(exists("df_trap_table")){rm("df_trap_table")}
 if(exists("df_trap_table_1")){rm("df_trap_table_1")}
 if(exists("df_trap_table_2")){rm("df_trap_table_2")}
-#### End of create dataframe for trap table
+
+# Create dataframe for trapline ----
+trap_species_caught <- df_trap_records |> 
+  select(trap_id, trap_code, species_level_2, strikes) |> 
+  mutate(species = case_when(
+    species_level_2 == "Rat" ~ "Rat",
+    species_level_2 == "Mustelid" ~ "Mustelid",
+    species_level_2 == "Cat" ~ "Other",
+    species_level_2 == "None" ~ "None",
+    TRUE ~ "Other"
+  )) |> 
+  filter(species_level_2 != "None") |> 
+  group_by(trap_id, trap_code, species) |> 
+  summarize(strikes = sum(strikes)) |> 
+  ungroup() |> 
+  pivot_wider(names_from = species, values_from = strikes, values_fill = 0) |> 
+  relocate(trap_id, trap_code, Rat, Mustelid, Other)
+
+trap_line_summary <- df_trap_records |> 
+  select(line, trap_id, trap_code, record_date, prev_record_date, strikes, species_caught) |> 
+  filter(!is.na(line)) |> 
+  group_by(trap_id) |> 
+  filter(species_caught != 'None') |> 
+  summarize(
+    last_catch = max(record_date),
+    #last_check = max(record_date),
+    last_species = last(species_caught[record_date == max(record_date)])) |> 
+  ungroup() |> 
+  right_join(df_trap_records, by = "trap_id") |> 
+  select(line, trap_id, trap_code, record_date, prev_record_date, species_caught, strikes, record_id, last_catch, last_species) |> 
+  mutate(days_since = ifelse(is.na(as.integer(as.Date(record_date) - as.Date(prev_record_date))), 0, as.integer(as.Date(record_date) - as.Date(prev_record_date)))) |> 
+  filter(species_caught != 'None')
+
+trap_line_table <- trap_line_summary |> 
+  group_by(line, trap_code, last_catch, last_species) |> 
+  summarise(
+    "strikes" = sum(strikes),
+    "time checked" = n(),
+    "ave_days_between" = ave(days_since)) |> 
+  ungroup() |> 
+  select(line, trap_code, strikes, ave_days_between, last_catch, last_species) |> 
+  mutate(
+    ave_days_between = round(ave_days_between, digits = 0),
+    last_catch = as.Date(last_catch, format = "%Y-%m-%d"),
+    days_last_catch = format(as.integer(as.Date(today()) - as.Date(last_catch)), big.mark = ",")) |> 
+  unique() |> 
+  filter(line !="") |> 
+  left_join(trap_species_caught, by = join_by(trap_code == trap_code)) |> 
+  select(-trap_id)
+
+saveRDS(trap_line_table, file = "trap_line_table.rds")
+
+if(exists("trap_species_caught")){rm("trap_species_caught")}
+if(exists("trap_line_summary")){rm("trap_line_summary")}
