@@ -1,7 +1,8 @@
+name: Scheduled ETL
+
 on:
   schedule:
-    - cron '0 07 * * *'
-
+    - cron '0 8 * * *''
 
 jobs:
   import-data:
@@ -18,8 +19,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
       
-      - name: Import Data
-        run: Rscript -e 'source("etl.R")'
+      - name: Run ETL script
+        run: |
+          Rscript etl.R
       
       - name: Commit results
         run: |
