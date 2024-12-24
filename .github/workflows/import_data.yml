@@ -13,7 +13,7 @@ jobs:
 
       - name: Install R Dependencies
         uses: r-lib/actions/setup-renv@v2
-          with:
+        with:
           cache-version: 1
 
       - name: Checkout repository
