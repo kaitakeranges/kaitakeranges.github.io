@@ -136,8 +136,11 @@ repeat {
       Trapper == "Robbie Mcgreggor" ~ "Robbie McGregor",
       Trapper == "Robert Charles McGregor" ~ "Robbie McGregor",
       Trapper == "Robert McGregor" ~ "Robbie McGregor",
-      Trapper == "Rob Mcgregor" ~ "Rob McGregor",
-      Trapper == "rob mcgregor" ~ "Rob McGregor",
+      Trapper == "Rob Mcgregor" ~ "Robbie McGregor",
+      Trapper == "Robbie" ~ "Robbie McGregor",
+      Trapper == "Robbie McGregor" ~ "Robbie McGregor",
+      Trapper == "rob mcgregor" ~ "Robbie McGregor",
+      Trapper == "Robbie" ~ "Robbie McGregor",
       Trapper == "Mark.danenhauer" ~ "Mark Danenhauer",
       Trapper == "mark d" ~ "Mark Danenhauer",
       Trapper == "mark d." ~ "Mark Danenhauer",
@@ -154,8 +157,8 @@ repeat {
       Trapper == "bazz" ~ "Baz",
       Trapper == "johvel53@gmail.com" ~ "John Velvin",
       Trapper == "bkingi" ~ "Brandon Kingi",
-      Trapper == "pete" ~ "Peter Morgan",
-      Trapper == "Pete" ~ "Peter Morgan",
+      Trapper == "pete" ~ "Pete Morgan",
+      Trapper == "Pete" ~ "Pete Morgan",
       Trapper == "Pete M" ~ "Pete Morgan",
       Trapper == "Pete m" ~ "Pete Morgan",
       Trapper == "Petemorgan" ~ "Pete Morgan",
@@ -194,8 +197,24 @@ repeat {
       Trapper == "stevefrancis" ~ "Steve Francis",
       Trapper == "Bryce" ~ "Bryce Vickers",
       Trapper == "T Morris" ~ "Trevor Morris",
+      Trapper == "Daveclarke" ~ "Dave Clarke",
+      Trapper == "jimmyc" ~ "Jimmy C",
+      Trapper == "JimmyC" ~ "Jimmy C",
+      Trapper == "KTurton" ~ "K Turton",
+      Trapper == "Mdixon" ~ "M Dixon",
+      Trapper == "taranakimounga" ~ "Taranaki Mounga Project",
+      Trapper == "cblencowe" ~ "Cameron Blencowe",
       TRUE ~ Trapper
     )) %>% 
+    mutate(
+      Trapper_anon = Trapper %>%
+        str_split(" ") %>%                       # Split name into words
+        map_chr(~ if (length(.x) == 1) {
+          .x                                    # If only one word, return as is
+        } else {
+          paste(.x[1], paste(substr(.x[-1], 1, 1), collapse = ""), sep = " ") # Keep first name, initials for others
+        })
+    ) %>% 
     mutate(
       year = year(as.Date(record_date)),
       last_14_days = 
@@ -341,3 +360,29 @@ saveRDS(trap_line_table, file = "trap_line_table.rds")
 
 if(exists("trap_species_caught")){rm("trap_species_caught")}
 if(exists("trap_line_summary")){rm("trap_line_summary")}
+
+# Create dataframe for trapstatus.qmd ----
+date_today <- as.Date(today())
+
+df_trap_status_2 <- df_trap_records |> 
+  filter(line != '') |> 
+  filter(! trap_type %in% c('Unspecified', 'A24', 'Blitz', 'SA Cat', 'Rewild F-bomb')) |> 
+  select(
+    line,
+    trap_code,
+    record_date,
+    Trapper_anon
+  ) |> 
+  mutate(record_date = as.Date(record_date)) |> 
+  mutate(days_since = as.numeric(as.Date(today()) - as.Date(record_date))) |> 
+  select(line, Trapper_anon, record_date, days_since) |> 
+  group_by(line, Trapper_anon, record_date, days_since) |> 
+  summarize(
+    traps = n()
+  ) |> 
+  arrange(line, desc(record_date))
+
+saveRDS(df_trap_status_2, file="df_trap_status_2.rds")
+
+
+

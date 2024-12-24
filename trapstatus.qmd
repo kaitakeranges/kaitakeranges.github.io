@@ -1,0 +1,118 @@
+---
+title: "Trap Line Status"
+format: html
+---
+::::: {.image-text-box}
+
+:::: {.img}
+<img src="/Kaitake_Fungi_2.png" width="400px" class="rounded-image"></img>
+::::
+
+::: {.text-content}
+<h2 style="text-align:centre;">Trap Status</h2>
+<ul type = "dot">
+<li><h5>The target is to have traps checked every 2 weeks. The table below uses colour coding of;</h5></li>
+<li><h5>14 Days: green</h5></li>
+<li><h5>28 Days: yellow</h5></li>
+<li><h5>28+ Days: red</h5></li>
+</ul>
+<br>
+<h5>Expand any trap line to see who most recently checked, and when.</h5>
+:::
+
+:::::
+
+<hr style="border: 1px '#d2e3f3';">
+<hr style="border: 1px '#d2e3f3';">
+
+```{r, echo=FALSE, warning = FALSE}
+library(reactable)
+
+df_trap_status_2 <- readRDS("df_trap_status_2.rds")
+
+reactable(
+  df_trap_status_2,
+  resizable = TRUE,
+  defaultPageSize = 30,
+  groupBy = "line",
+  columns = list(
+    line = colDef(name = "Trap Line", minWidth = 160, headerStyle = list(backgroundColor = '#047C90', color= '#d2e3f3'),
+    style = JS(
+      "function(rowInfo) {
+          if (rowInfo.aggregated) {
+            if (rowInfo.values['days_since'] > 28)
+              return { backgroundColor: '#f8d7da', color: '#721c24' , borderRight : '1px solid rgba(255, 255, 255, 1)'};
+            else if (rowInfo.values['days_since'] > 14)
+              return { backgroundColor: '#fff3cd', color: '#856404' , borderRight : '1px solid rgba(255, 255, 255, 1)'};
+            else
+              return { backgroundColor: '#d4edda', color: '#155724', borderRight : '1px solid rgba(255, 255, 255, 1)' };
+          }
+        return {}
+      }"
+    )),
+    record_date = colDef(aggregate = "max", name = "Date Checked", maxWidth = 120, headerStyle = list(backgroundColor = '#047C90', color= '#d2e3f3'),
+    style = JS(
+      "function(rowInfo) {
+          if (rowInfo.aggregated) {
+            if (rowInfo.values['days_since'] > 28)
+              return { backgroundColor: '#f8d7da', color: '#721c24', borderRight : '1px solid rgba(255, 255, 255, 1)' };
+            else if (rowInfo.values['days_since'] > 14)
+              return { backgroundColor: '#fff3cd', color: '#856404', borderRight : '1px solid rgba(255, 255, 255, 1)' };
+            else
+              return { backgroundColor: '#d4edda', color: '#155724', borderRight : '1px solid rgba(255, 255, 255, 1)' };
+    }
+      return { backgroundColor: '#047C90', color: '#d2e3f3', borderRight : '1px solid rgba(255, 255, 255, 1)'}
+      }"
+    )),
+    days_since = colDef(aggregate = "min", name = "Days Since Checked", maxWidth = 120, headerStyle = list(backgroundColor = '#047C90', color= '#d2e3f3'),
+      style = JS(
+        "function(rowInfo) {
+            if (rowInfo.aggregated) {
+              if (rowInfo.values['days_since'] > 28)
+                return { backgroundColor: '#f8d7da', color: '#721c24', borderRight : '1px solid rgba(255, 255, 255, 1)' };
+              else if (rowInfo.values['days_since'] > 14)
+                return { backgroundColor: '#fff3cd', color: '#856404', borderRight : '1px solid rgba(255, 255, 255, 1)' };
+              else
+                return { backgroundColor: '#d4edda', color: '#155724', borderRight : '1px solid rgba(255, 255, 255, 1)' };
+      }
+        return { backgroundColor: '#047C90', color: '#d2e3f3', borderRight : '1px solid rgba(255, 255, 255, 1)'}
+        }"
+    )),
+    traps = colDef(aggregate = "max", name = "No. Traps", maxWidth = 120, headerStyle = list(backgroundColor = '#047C90', color= '#d2e3f3'),
+      style = JS(
+        "function(rowInfo) {
+            if (rowInfo.aggregated) {
+              if (rowInfo.values['days_since'] > 28)
+                return { backgroundColor: '#f8d7da', color: '#721c24', borderRight : '1px solid rgba(255, 255, 255, 1)' };
+              else if (rowInfo.values['days_since'] > 14)
+                return { backgroundColor: '#fff3cd', color: '#856404', borderRight : '1px solid rgba(255, 255, 255, 1)' };
+              else
+                return { backgroundColor: '#d4edda', color: '#155724', borderRight : '1px solid rgba(255, 255, 255, 1)' };
+      }
+        return { backgroundColor: '#047C90', color: '#d2e3f3', borderRight : '1px solid rgba(255, 255, 255, 1)'}
+        }"
+    )),
+      Trapper_anon = colDef(headerStyle = list(backgroundColor = '#047C90', color= '#d2e3f3'),
+        style = JS(
+          "function(rowInfo) {
+            if (rowInfo.aggregated)
+              return {}
+            else
+              return {backgroundColor: '#047C90', color: '#d2e3f3', borderRight : '1px solid rgba(255, 255, 255, 1)'}
+          }"
+        )
+      )
+  ),
+  defaultSorted = list("days_since" = "asc", "record_date" = "asc"),
+  theme = reactableTheme(
+    tableStyle = list(className = "trapstatus-reactable")
+  )
+)
+
+```
+
+<hr style="border: 1px '#d2e3f3';">
+<hr style="border: 1px '#d2e3f3';">
+
+<h5>This chart shows the cumulative number of traps checked within the last (x) days</h5>
+<br>
