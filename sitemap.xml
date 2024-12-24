@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://kaitakeranges.github.io/trapline.html</loc>
-    <lastmod>2024-12-24T00:30:17.889Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kaitakeranges.github.io/status.html</loc>
-    <lastmod>2024-12-24T00:30:17.889Z</lastmod>
-  </url>
-  <url>
-    <loc>https://kaitakeranges.github.io/about.html</loc>
-    <lastmod>2024-12-24T00:30:17.885Z</lastmod>
+    <loc>https://kaitakeranges.github.io/trapstatus.html</loc>
+    <lastmod>2024-12-24T06:22:37.187Z</lastmod>
   </url>
   <url>
     <loc>https://kaitakeranges.github.io/index.html</loc>
-    <lastmod>2024-12-24T00:30:17.888Z</lastmod>
+    <lastmod>2024-12-24T06:22:37.186Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kaitakeranges.github.io/about.html</loc>
+    <lastmod>2024-12-24T06:22:37.182Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kaitakeranges.github.io/status.html</loc>
+    <lastmod>2024-12-24T06:22:37.187Z</lastmod>
+  </url>
+  <url>
+    <loc>https://kaitakeranges.github.io/trapline.html</loc>
+    <lastmod>2024-12-24T06:22:37.187Z</lastmod>
   </url>
 </urlset>
