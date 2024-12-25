@@ -264,6 +264,7 @@ if(exists("df_trap_point")){rm("df_trap_point")}
 if(exists("df_trap_properties")){rm("df_trap_properties")}
 
 
+df_trap_records <- readRDS("df_trap_records.rds")
 
 # Create dataframe for trap table ----
 df_trap_table <- df_trap_records |> 
@@ -328,7 +329,7 @@ trap_line_summary <- df_trap_records |>
   select(line, trap_id, trap_code, record_date, prev_record_date, strikes, species_caught) |> 
   drop_na(line) |> 
   group_by(trap_id) |> 
-  filter(species_caught != 'None') |> 
+  filter(species_caught != "None") |> 
   summarize(
     last_catch = max(record_date),
     #last_check = max(record_date),
@@ -337,7 +338,7 @@ trap_line_summary <- df_trap_records |>
   right_join(df_trap_records, by = "trap_id") |> 
   select(line, trap_id, trap_code, record_date, prev_record_date, species_caught, strikes, record_id, last_catch, last_species) |> 
   mutate(days_since = ifelse(is.na(as.integer(as.Date(record_date) - as.Date(prev_record_date))), 0, as.integer(as.Date(record_date) - as.Date(prev_record_date)))) |> 
-  filter(species_caught != 'None')
+  filter(species_caught != "None")
 
 trap_line_table <- trap_line_summary |> 
   group_by(line, trap_code, last_catch, last_species) |> 
