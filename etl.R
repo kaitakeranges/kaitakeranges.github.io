@@ -326,7 +326,7 @@ trap_species_caught <- df_trap_records |>
 
 trap_line_summary <- df_trap_records |> 
   select(line, trap_id, trap_code, record_date, prev_record_date, strikes, species_caught) |> 
-  filter(!is.na(line)) |> 
+  drop_na(line) |> 
   group_by(trap_id) |> 
   filter(species_caught != 'None') |> 
   summarize(
@@ -352,7 +352,7 @@ trap_line_table <- trap_line_summary |>
     last_catch = as.Date(last_catch, format = "%Y-%m-%d"),
     days_last_catch = format(as.integer(as.Date(today()) - as.Date(last_catch)), big.mark = ",")) |> 
   unique() |> 
-  filter(line !="") |> 
+  drop_na(line) |> 
   left_join(trap_species_caught, by = join_by(trap_code == trap_code)) |> 
   select(-trap_id)
 
@@ -365,7 +365,7 @@ if(exists("trap_line_summary")){rm("trap_line_summary")}
 date_today <- as.Date(today())
 
 df_trap_status_2 <- df_trap_records |> 
-  filter(line != '') |> 
+  drop_na(line) |>
   filter(! trap_type %in% c('Unspecified', 'A24', 'Blitz', 'SA Cat', 'Rewild F-bomb')) |> 
   select(
     line,

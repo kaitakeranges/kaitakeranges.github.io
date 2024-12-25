@@ -92,7 +92,7 @@ reactable(
         return { backgroundColor: '#047C90', color: '#d2e3f3', borderRight : '1px solid rgba(255, 255, 255, 1)'}
         }"
     )),
-      Trapper_anon = colDef(headerStyle = list(backgroundColor = '#047C90', color= '#d2e3f3'),
+      Trapper_anon = colDef(name = "Trapper", headerStyle = list(backgroundColor = '#047C90', color= '#d2e3f3'),
         style = JS(
           "function(rowInfo) {
             if (rowInfo.aggregated)

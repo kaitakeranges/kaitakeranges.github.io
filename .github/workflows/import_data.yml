@@ -2,7 +2,7 @@ name: Scheduled ETL
 
 on:
   schedule:
-    - cron: "0 9 * * *"
+    - cron: "0 21 * * *"
 
 jobs:
   import-data:
@@ -24,8 +24,7 @@ jobs:
           cache-version: 1
       
       - name: Run ETL script
-        run: |
-          Rscript etl.R
+        run: Rscript -e 'source("etl.R")'
       
       - name: Commit results
         run: |
