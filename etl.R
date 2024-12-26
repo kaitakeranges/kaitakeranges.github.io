@@ -263,13 +263,17 @@ if(exists("df_trap_combined")){rm("df_trap_combined")}
 if(exists("df_trap_point")){rm("df_trap_point")}
 if(exists("df_trap_properties")){rm("df_trap_properties")}
 
-
-df_trap_records <- readRDS("df_trap_records.rds")
-
 # Create dataframe for trap table ----
+
+if (is.null(df_trap_records)) stop("Error: df_trap_records is NULL")
+print(paste("Rows in df_trap_records:", nrow(df_trap_records)))
+
 df_trap_table <- df_trap_records |> 
   filter(year > 2017) |> 
   select(record_date, year, record_id, species_level_1, last_14_days, last_28_days, last_14_days_ly, last_28_days_ly)
+
+if (is.null(df_trap_table)) stop("Error: df_trap_table is NULL")
+print(paste("Rows in df_trap_table:", nrow(df_trap_table)))
 
 df_trap_table_1 <- df_trap_table |> 
   group_by(year, species_level_1) |> 
