@@ -312,7 +312,7 @@ df_trap_table_data <- rbind(df_trap_table_1, df_trap_table_2) |>
    arrange(factor(period, c("Last 2 Weeks", "Last 2 Weeks (last year)", "Last 4 Weeks", "Last 4 Weeks (last year)")))
 df_trap_table_data <- df_trap_table_data[, c("period", "None", "Rat", "Stoat", "Ferret", "Weasel", "Hedgehog", "Cat", "Other")]
 
- saveRDS(df_trap_table_data, file = "df_trap_table_data.rds")
+saveRDS(df_trap_table_data, file = "df_trap_table_data.rds")
 
  if(exists("df_trap_table")){rm("df_trap_table")}
  if(exists("df_trap_table_1")){rm("df_trap_table_1")}
@@ -374,7 +374,7 @@ if(exists("trap_line_summary")){rm("trap_line_summary")}
 # Create dataframe for trapstatus.qmd ----
 date_today <- as.Date(today())
 
-df_trap_status_2 <- readRDS("df_trap_records.rds" |>
+df_trap_status_2 <- readRDS("df_trap_records.rds") |>
   drop_na(line) |>
   filter(! trap_type %in% c('Unspecified', 'A24', 'Blitz', 'SA Cat', 'Rewild F-bomb')) |>
   select(
@@ -392,7 +392,7 @@ df_trap_status_2 <- readRDS("df_trap_records.rds" |>
   ) |>
   arrange(line, desc(record_date))
 
-saveRDS(df_trap_status_2, file="df_trap_status_2.rds")
+saveRDS(df_trap_status_2, file = "df_trap_status_2.rds")
 
 
 
