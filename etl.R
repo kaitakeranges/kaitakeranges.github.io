@@ -19,8 +19,8 @@ df_trap_points <- do.call(rbind, lapply(df_trap_points_list$coordinates, functio
 
 df_trap_properties <- df_traps$features$properties # Parse the trap properties into a second dataframe
 
-df_trap_status <- cbind(df_trap_points, df_trap_properties) %>% 
-  filter(project_id == 708466) # Join coordinates to properties
+df_trap_status <- cbind(df_trap_points, df_trap_properties)
+  # filter(project_id == 708466) # Join coordinates to properties
 saveRDS(df_trap_status, file = "df_trap_status.rds")
 
 date_trap_status <- as.Date(today())
