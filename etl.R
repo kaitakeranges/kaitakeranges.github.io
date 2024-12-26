@@ -367,27 +367,27 @@ if(exists("trap_species_caught")){rm("trap_species_caught")}
 if(exists("trap_line_summary")){rm("trap_line_summary")}
 
 # Create dataframe for trapstatus.qmd ----
-date_today <- as.Date(today())
-
-df_trap_status_2 <- df_trap_records |> 
-  drop_na(line) |>
-  filter(! trap_type %in% c('Unspecified', 'A24', 'Blitz', 'SA Cat', 'Rewild F-bomb')) |> 
-  select(
-    line,
-    trap_code,
-    record_date,
-    Trapper_anon
-  ) |> 
-  mutate(record_date = as.Date(record_date)) |> 
-  mutate(days_since = as.numeric(as.Date(today()) - as.Date(record_date))) |> 
-  select(line, Trapper_anon, record_date, days_since) |> 
-  group_by(line, Trapper_anon, record_date, days_since) |> 
-  summarize(
-    traps = n()
-  ) |> 
-  arrange(line, desc(record_date))
-
-saveRDS(df_trap_status_2, file="df_trap_status_2.rds")
+# date_today <- as.Date(today())
+# 
+# df_trap_status_2 <- df_trap_records |> 
+#   drop_na(line) |>
+#   filter(! trap_type %in% c('Unspecified', 'A24', 'Blitz', 'SA Cat', 'Rewild F-bomb')) |> 
+#   select(
+#     line,
+#     trap_code,
+#     record_date,
+#     Trapper_anon
+#   ) |> 
+#   mutate(record_date = as.Date(record_date)) |> 
+#   mutate(days_since = as.numeric(as.Date(today()) - as.Date(record_date))) |> 
+#   select(line, Trapper_anon, record_date, days_since) |> 
+#   group_by(line, Trapper_anon, record_date, days_since) |> 
+#   summarize(
+#     traps = n()
+#   ) |> 
+#   arrange(line, desc(record_date))
+# 
+# saveRDS(df_trap_status_2, file="df_trap_status_2.rds")
 
 
 
