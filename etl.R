@@ -210,7 +210,7 @@ df_trap_properties <- df_trap_properties |>
        Trapper == "taranakimounga" ~ "Taranaki Mounga Project",
        Trapper == "cblencowe" ~ "Cameron Blencowe",
        TRUE ~ Trapper
-     )) %>%
+     )) |>
      mutate(
        Trapper_anon = Trapper %>%
          str_split(" ") %>%                       # Split name into words
@@ -219,7 +219,7 @@ df_trap_properties <- df_trap_properties |>
          } else {
            paste(.x[1], paste(substr(.x[-1], 1, 1), collapse = ""), sep = " ") # Keep first name, initials for others
          })
-     ) %>%
+     ) |>
      mutate(
        year = year(as.Date(record_date)),
        last_14_days =
@@ -244,6 +244,7 @@ df_trap_properties <- df_trap_properties |>
          ),
        yyyy_ww = strftime(as.Date(record_date), "%Y-%V")
      )
+
    df_trap_point <- do.call(rbind, lapply(df_raw_content$features$geometry$coordinates, function(x) {
      data.frame(longitude = x[1], latitude = x[2])
    }))
@@ -373,7 +374,7 @@ if(exists("trap_line_summary")){rm("trap_line_summary")}
 # Create dataframe for trapstatus.qmd ----
 date_today <- as.Date(today())
 
-df_trap_status_2 <- df_trap_records |>
+df_trap_status_2 <- readRDS("df_trap_records.rds" |>
   drop_na(line) |>
   filter(! trap_type %in% c('Unspecified', 'A24', 'Blitz', 'SA Cat', 'Rewild F-bomb')) |>
   select(
