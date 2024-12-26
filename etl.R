@@ -39,10 +39,13 @@ startindex <- readRDS("startindex.rds")
 base_url <- 'https://io.trap.nz/geo/trapnz-projects/wfs/'
 end_url <- '?service=WFS&version=2.0.0&request=GetFeature&typeName=trapnz-projects:default-project-trap-records&outputFormat=json'
 url_records <- paste0(base_url, Sys.getenv("API_KEY"), '/', Sys.getenv("PROJECT_KEY"), end_url)
+
 if(is.null(startindex) || startindex == 0) {
    startindex <- 0
    rm(df_trap_records)
 }
+
+df_trap_records <- readRDS("df_trap_records.rds")
 
 count <- 5000
 
@@ -58,7 +61,8 @@ repeat {
    if(is.null(count_records) || count_records == 0) {
      print("No more records to return")
      break
-}
+   }
+
 df_trap_properties <- df_raw_content$features$properties
 df_trap_properties <- df_trap_properties |>
      select(
