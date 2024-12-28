@@ -20,8 +20,7 @@ website:
       - text: "Trap Line Status"
         href: trapstatus.qmd
         icon: file-bar-graph
-  page-footer: "An R Quarto Website" <br> 
-                "Data sourced from trap.nz"
+  page-footer: "An R Quarto Website"
 
 format:
   html:
