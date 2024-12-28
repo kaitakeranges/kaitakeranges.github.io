@@ -45,7 +45,7 @@ if(is.null(startindex) || startindex == 0) {
    if(exists("df_trap_records")){rm("df_trap_records")}
 }
 
-#df_trap_records <- readRDS("df_trap_records.rds")
+df_trap_records <- readRDS("df_trap_records.rds")
 
 count <- 5000
 
