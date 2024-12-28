@@ -6,14 +6,16 @@ library(tidyverse)
 #### API calls to retrieve data from traps.nz. One call for trap status (1. df_trap_status), the second for trap records (2. df_trap_records)
 #### 1. df_trap_status. This holds data for trap installation date, last record etc. ####
 api_key <- Sys.getenv("API_KEY")
-if (api_key == "") stop("API_KEY is not set!")
+project_key <- Sys.getenv("PROJECT_KEY")
+if (api_key == "") stop("API_KEY is not set")
+if (project_key == "") stop("PROJECT_KEY is not set")
 
 
 base_url <- 'https://io.trap.nz/geo/trapnz-projects/wfs/'
 end_url <- "?service=WFS&version=2.0.0&request=GetFeature&typeName=trapnz-projects:my-projects-traps&outputFormat=json"
 
 
-df_traps <- fromJSON(paste0(base_url, Sys.getenv("API_KEY"), "/", Sys.getenv("PROJECT_KEY"), end_url)) # Full result for traps
+df_traps <- fromJSON(paste0(base_url, api_key, "/", project_key, end_url)) # Full result for traps
 df_trap_points_list <- df_traps[[2]][3]$geometry # Parse the trap geometry first into a dataframe
 
 df_trap_points <- do.call(rbind, lapply(df_trap_points_list$coordinates, function(x) {
@@ -41,7 +43,7 @@ rm("df_traps", "df_trap_points_list", "df_trap_points", "df_trap_properties") # 
 startindex <- readRDS("startindex.rds")
 base_url <- 'https://io.trap.nz/geo/trapnz-projects/wfs/'
 end_url <- '?service=WFS&version=2.0.0&request=GetFeature&typeName=trapnz-projects:default-project-trap-records&outputFormat=json'
-url_records <- paste0(base_url, Sys.getenv("API_KEY"), '/', Sys.getenv("PROJECT_KEY"), end_url)
+url_records <- paste0(base_url, api_key, '/', project_key, end_url)
 
 if(is.null(startindex) || startindex == 0) {
    startindex <- 0

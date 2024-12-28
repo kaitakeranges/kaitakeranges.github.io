@@ -2,7 +2,7 @@ name: Scheduled ETL
 
 on:
   schedule:
-    - cron: "25 06 * * *"
+    - cron: "50 06 * * *"
 
 jobs:
   import-data:
