@@ -45,7 +45,7 @@ if(is.null(startindex) || startindex == 0) {
    if(exists("df_trap_records")){rm("df_trap_records")}
 }
 
-df_trap_records <- readRDS("df_trap_records.rds")
+#df_trap_records <- readRDS("df_trap_records.rds")
 
 count <- 5000
 
@@ -274,7 +274,7 @@ if(exists("df_trap_properties")){rm("df_trap_properties")}
 if (is.null(df_trap_records)) stop("Error: df_trap_records is NULL")
 print(paste("Rows in df_trap_records:", nrow(df_trap_records)))
 
-df_trap_table <- df_trap_records |>
+df_trap_table <- readRDS("df_trap_records.rds") |>
    filter(year > 2017) |>
    select(record_date, year, record_id, species_level_1, last_14_days, last_28_days, last_14_days_ly, last_28_days_ly)
 
@@ -319,7 +319,7 @@ saveRDS(df_trap_table_data, file = "df_trap_table_data.rds")
  if(exists("df_trap_table_2")){rm("df_trap_table_2")}
 
  # Create dataframe for trapline ----
-trap_species_caught <- df_trap_records |>
+trap_species_caught <- readRDS("df_trap_records.rds") |>
    select(trap_id, trap_code, species_level_2, strikes) |>
    mutate(species = case_when(
      species_level_2 == "Rat" ~ "Rat",
