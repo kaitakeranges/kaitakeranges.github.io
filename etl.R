@@ -257,6 +257,7 @@ df_trap_properties <- df_trap_properties |>
      df_trap_records <- df_trap_combined
    }
    startindex <- startindex + count_records
+   print(paste("startindex now: ", startindex))
  }
 
 saveRDS(startindex, file = "startindex.rds")
@@ -272,7 +273,7 @@ if(exists("df_trap_properties")){rm("df_trap_properties")}
 # Create dataframe for trap table ----
 
 if (is.null(df_trap_records)) stop("Error: df_trap_records is NULL")
-print(paste("Rows in df_trap_records:", nrow(df_trap_records)))
+print(paste("Rows in df_trap_records:", nrow(readRDS("df_trap_records.rds"))))
 
 df_trap_table <- readRDS("df_trap_records.rds") |>
    filter(year > 2017) |>
