@@ -5,6 +5,9 @@ library(tidyverse)
 
 #### API calls to retrieve data from traps.nz. One call for trap status (1. df_trap_status), the second for trap records (2. df_trap_records)
 #### 1. df_trap_status. This holds data for trap installation date, last record etc. ####
+api_key <- Sys.getenv("API_KEY")
+if (api_key == "") stop("API_KEY is not set!")
+
 
 base_url <- 'https://io.trap.nz/geo/trapnz-projects/wfs/'
 end_url <- "?service=WFS&version=2.0.0&request=GetFeature&typeName=trapnz-projects:my-projects-traps&outputFormat=json"
