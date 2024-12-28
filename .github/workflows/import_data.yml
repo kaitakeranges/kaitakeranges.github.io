@@ -2,7 +2,7 @@ name: Scheduled ETL
 
 on:
   schedule:
-    - cron: "50 06 * * *"
+    - cron: "55 06 * * *"
 
 jobs:
   import-data:
@@ -25,8 +25,8 @@ jobs:
       
       - name: Run ETL script
         env:
-          API_KEY: $({ secrets.API_KEY })
-          PROJECT_KEY: $({ secrets.PROJECT_KEY })
+          API_KEY: ${{ secrets.API_KEY }}
+          PROJECT_KEY: ${{ secrets.PROJECT_KEY }}
         run: Rscript -e 'source("etl.R")'
       
       - name: Commit results
