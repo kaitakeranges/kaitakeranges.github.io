@@ -42,7 +42,7 @@ url_records <- paste0(base_url, Sys.getenv("API_KEY"), '/', Sys.getenv("PROJECT_
 
 if(is.null(startindex) || startindex == 0) {
    startindex <- 0
-   rm(df_trap_records)
+   if(exists("df_trap_records")){rm("df_trap_records")}
 }
 
 df_trap_records <- readRDS("df_trap_records.rds")
@@ -263,11 +263,11 @@ saveRDS(startindex, file = "startindex.rds")
 saveRDS(df_trap_records, file = "df_trap_records.rds")
 saveRDS(max(as.Date(df_trap_records$record_date)), file = "date_trap_status.rds")
 
- if(exists("df_raw")){rm("df_raw")}
- if(exists("df_raw_content")){rm("df_raw_content")}
- if(exists("df_trap_combined")){rm("df_trap_combined")}
- if(exists("df_trap_point")){rm("df_trap_point")}
- if(exists("df_trap_properties")){rm("df_trap_properties")}
+if(exists("df_raw")){rm("df_raw")}
+if(exists("df_raw_content")){rm("df_raw_content")}
+if(exists("df_trap_combined")){rm("df_trap_combined")}
+if(exists("df_trap_point")){rm("df_trap_point")}
+if(exists("df_trap_properties")){rm("df_trap_properties")}
 
 # Create dataframe for trap table ----
 
