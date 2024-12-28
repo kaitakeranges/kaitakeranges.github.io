@@ -58,13 +58,16 @@ repeat {
    }
    df_raw_content <- content(df_raw, "parsed", simplifyVector = TRUE)
    count_records <- nrow(df_raw_content$features$properties)
+   print(paste("get url: ",get_url))
+   print(paste("count raw records: ", count_records))
+   
    if(is.null(count_records) || count_records == 0) {
      print("No more records to return")
      break
    }
 
-df_trap_properties <- df_raw_content$features$properties
-df_trap_properties <- df_trap_properties |>
+  df_trap_properties <- df_raw_content$features$properties
+  df_trap_properties <- df_trap_properties |>
      select(
        record_id,
        line,
@@ -219,7 +222,7 @@ df_trap_properties <- df_trap_properties |>
          } else {
            paste(.x[1], paste(substr(.x[-1], 1, 1), collapse = ""), sep = " ") # Keep first name, initials for others
          })
-     ) |>
+      ) |>
      mutate(
        year = year(as.Date(record_date)),
        last_14_days =
@@ -258,7 +261,7 @@ df_trap_properties <- df_trap_properties |>
    }
    startindex <- startindex + count_records
    print(paste("startindex now: ", startindex))
- }
+}
 
 saveRDS(startindex, file = "startindex.rds")
 saveRDS(df_trap_records, file = "df_trap_records.rds")
