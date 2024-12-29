@@ -1,5 +1,5 @@
 ---
-title: "kaitakeranges.github.io"
+title: "Kaitake Ranges Conservation Trust"
 ---
 
 ::::: {.image-text-box}
@@ -12,10 +12,9 @@ title: "kaitakeranges.github.io"
 <h2 style="text-align:centre;">Contents</h2>
 <ul type = "dot">
 <li><h5>About: The Why's, Where's, Who's and What's</h5></li>
-<li><h5>Trap Status: Statistics from the traps managed</h5></li>
-<li><h5>Post Poison Operation: A perspective of trap activity following aerial operation(s)</h5></li>
-<li><h5>Trap Line Summary: Current status at the trap line level</h5></li>
-<li><h5>Trapper Effort: A searchable summary on individual trapper effort</h5></li>
+<li><h5>Status: Statistics of catch history for the traps managed</h5></li>
+<li><h5>Trap Line Summary: An interactive table for interrogating Lines and Traps</h5></li>
+<li><h5>Trap Line Status: An interactive table showing servicing history by trap line</h5></li>
 </ul>
 :::
 
