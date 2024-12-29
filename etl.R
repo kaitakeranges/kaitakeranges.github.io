@@ -28,7 +28,7 @@ df_trap_status <- cbind(df_trap_points, df_trap_properties)
   # filter(project_id == 708466) # Join coordinates to properties
 saveRDS(df_trap_status, file = "df_trap_status.rds")
 
-date_trap_status <- as.Date(today())
+date_trap_status <- as.Date(with_tz(Sys.time(), tzone = "Pacific/Auckland")
 saveRDS(date_trap_status, file = "date_trap_status.rds")
 
 rm("df_traps", "df_trap_points_list", "df_trap_points", "df_trap_properties") # Remove the intermediate lists and dataframes
@@ -232,22 +232,22 @@ repeat {
        year = year(as.Date(record_date)),
        last_14_days =
          case_when(
-           as.Date(today()) <= as.Date(record_date) + 14 ~ 1,
+           as.Date(with_tz(Sys.time(), tzone = "Pacific/Auckland")) <= as.Date(record_date) + 14 ~ 1,
            TRUE ~ 0
          ),
        last_28_days =
          case_when(
-           as.Date(today()) <= as.Date(record_date) + 28 ~ 1,
+           as.Date(with_tz(Sys.time(), tzone = "Pacific/Auckland")) <= as.Date(record_date) + 28 ~ 1,
            TRUE ~ 0
          ),
        last_14_days_ly =
          case_when(
-           as.Date(today()) - 365 <= as.Date(record_date) + 14 & as.Date(today()) - 365 > as.Date(record_date) ~ 1,
+           as.Date(with_tz(Sys.time(), tzone = "Pacific/Auckland")) - 365 <= as.Date(record_date) + 14 & as.Date(with_tz(Sys.time(), tzone = "Pacific/Auckland")) - 365 > as.Date(record_date) ~ 1,
            TRUE ~ 0
          ),
        last_28_days_ly =
          case_when(
-           as.Date(today()) - 365 <= as.Date(record_date) + 28 & as.Date(today()) - 365 > as.Date(record_date) ~ 1,
+           as.Date(with_tz(Sys.time(), tzone = "Pacific/Auckland")) - 365 <= as.Date(record_date) + 28 & as.Date(with_tz(Sys.time(), tzone = "Pacific/Auckland")) - 365 > as.Date(record_date) ~ 1,
            TRUE ~ 0
          ),
        yyyy_ww = strftime(as.Date(record_date), "%Y-%V")
@@ -393,7 +393,7 @@ df_trap_status_2 <- readRDS("df_trap_records.rds") |>
     Trapper_anon
   ) |>
   mutate(record_date = as.Date(record_date)) |>
-  mutate(days_since = as.numeric(as.Date(today()) - as.Date(record_date))) |>
+  mutate(days_since = as.numeric(as.Date(with_tz(Sys.time(), tzone = "Pacific/Auckland")) - as.Date(record_date))) |>
   select(line, Trapper_anon, record_date, days_since) |>
   group_by(line, Trapper_anon, record_date, days_since) |>
   summarize(
@@ -402,26 +402,3 @@ df_trap_status_2 <- readRDS("df_trap_records.rds") |>
   arrange(line, desc(record_date))
 
 saveRDS(df_trap_status_2, file = "df_trap_status_2.rds")
-
-
-
-
-df_trap_status_delete <- readRDS("df_trap_records.rds") |>
-  drop_na(line) |>
-  filter(! trap_type %in% c('Unspecified', 'A24', 'Blitz', 'SA Cat', 'Rewild F-bomb')) |>
-  select(
-    line,
-    trap_code,
-    record_date,
-    Trapper_anon
-  ) |>
-  mutate(record_date = as.Date(record_date)) |>
-  mutate(days_since = as.numeric(as.Date(today()) - as.Date(record_date))) |>
-  select(line, Trapper_anon, record_date, days_since) |>
-  group_by(line, Trapper_anon, record_date, days_since) |>
-  summarize(
-    traps = n()
-  ) |>
-  arrange(line, desc(record_date))
-
-
