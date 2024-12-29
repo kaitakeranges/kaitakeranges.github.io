@@ -3,5 +3,6 @@
 .RData
 .Ruserdata
 .Renviron
+workings.R
 
 /.quarto/

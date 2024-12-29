@@ -28,7 +28,7 @@ df_trap_status <- cbind(df_trap_points, df_trap_properties)
   # filter(project_id == 708466) # Join coordinates to properties
 saveRDS(df_trap_status, file = "df_trap_status.rds")
 
-date_trap_status <- as.Date(with_tz(Sys.time(), tzone = "Pacific/Auckland")
+date_trap_status <- as.Date(with_tz(Sys.time(), tzone = "Pacific/Auckland"))
 saveRDS(date_trap_status, file = "date_trap_status.rds")
 
 rm("df_traps", "df_trap_points_list", "df_trap_points", "df_trap_properties") # Remove the intermediate lists and dataframes
