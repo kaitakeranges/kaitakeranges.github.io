@@ -73,7 +73,7 @@ repeat {
 
   df_trap_properties <- df_raw_content$features$properties
   df_trap_properties <- df_trap_properties |>
-     select(
+    select(
        record_id,
        line,
        trap_id,
@@ -86,7 +86,10 @@ repeat {
        recorded_by,
        username
      ) %>%
-     mutate(species_level_1 =
+    mutate(
+      record_date = with_tz(as_datetime(record_date), tzone = "Pacific/Auckland")
+    ) %>% 
+    mutate(species_level_1 =
               case_when(
                 species_caught == "Rat - Ship" ~ "Rat",
                 species_caught == "Rat - Norway" ~ "Rat",
@@ -99,7 +102,7 @@ repeat {
                 species_caught == "Unspecified" ~ "Other",
                 TRUE ~ species_caught
               )) |>
-     mutate(species_level_2 =
+    mutate(species_level_2 =
               case_when(
                 species_level_1 == "Rat" ~ "Rat",
                 species_level_1 == "Stoat" ~ "Mustelid",
@@ -110,8 +113,8 @@ repeat {
                 TRUE ~ "Other"
               )
      ) |>
-     mutate(Trapper = str_trim(coalesce(recorded_by, username))) |>
-     mutate(Trapper = case_when(
+    mutate(Trapper = str_trim(coalesce(recorded_by, username))) |>
+    mutate(Trapper = case_when(
        Trapper == "Brandon Arana Kingi" ~ "Brandon Kingi",
        Trapper == "Jc" ~ "JC",
        Trapper == "Vaughan scott Turner" ~ "Vaughan Turner",
@@ -219,7 +222,7 @@ repeat {
        Trapper == "cblencowe" ~ "Cameron Blencowe",
        TRUE ~ Trapper
      )) |>
-     mutate(
+    mutate(
        Trapper_anon = Trapper %>%
          str_split(" ") %>%                       # Split name into words
          map_chr(~ if (length(.x) == 1) {
@@ -228,7 +231,7 @@ repeat {
            paste(.x[1], paste(substr(.x[-1], 1, 1), collapse = ""), sep = " ") # Keep first name, initials for others
          })
       ) |>
-     mutate(
+    mutate(
        year = year(as.Date(record_date)),
        last_14_days =
          case_when(
@@ -271,6 +274,7 @@ repeat {
 saveRDS(startindex, file = "startindex.rds")
 saveRDS(df_trap_records, file = "df_trap_records.rds")
 saveRDS(max(as.Date(df_trap_records$record_date)), file = "date_trap_status.rds")
+saveRDS(as.Date(with_tz(Sys.time(), tzone = "Pacific/Auckland")), file = "date_refreshed.rds")
 
 if(exists("df_raw")){rm("df_raw")}
 if(exists("df_raw_content")){rm("df_raw_content")}

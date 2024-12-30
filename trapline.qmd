@@ -1,6 +1,8 @@
 ---
 title: "Trap Line Summary"
-subtitle: "`r paste('Last updated on:', readRDS('date_trap_status.rds'))`"
+subtitle: |
+  `r paste('Last data refresh:', readRDS('date_refreshed.rds'))` <br>
+  `r paste('Latest trap record:', readRDS('date_trap_status.rds'))`
 format: html
 ---
 
