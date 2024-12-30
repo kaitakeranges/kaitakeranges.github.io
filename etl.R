@@ -32,9 +32,9 @@ df_trap_status <- cbind(df_trap_points, df_trap_properties)
 saveRDS(df_trap_status, file = "df_trap_status.rds")
 
 if(current_tz == "Pacific/Auckland") {
-  date_refreshed <- as.Date(Sys.time())
+  date_refreshed <- as_datetime(Sys.time())
   } else {
-  date_refreshed <- as.Date(Sys.time()) + lubridate::hours(13)
+  date_refreshed <- as_datetime(Sys.time()) + lubridate::hours(13)
   }
 saveRDS(date_refreshed, file = "date_refreshed.rds")
 
@@ -281,9 +281,9 @@ saveRDS(startindex, file = "startindex.rds")
 saveRDS(df_trap_records, file = "df_trap_records.rds")
 
 if(current_tz == "Pacific/Auckland") {
-  date_trap_status <- as.Date(max(df_trap_records$record_date))
+  date_trap_status <- as_datetime(max(df_trap_records$record_date, na.rm = TRUE))
 } else {
-  date_trap_status <- as.Date(max(df_trap_records$record_date)) + lubridate::hours(13)
+  date_trap_status <- as_datetime(max(df_trap_records$record_date, na.rm = TRUE)) + lubridate::hours(13)
 }
 saveRDS(date_trap_status, file = "date_trap_status.rds")
 

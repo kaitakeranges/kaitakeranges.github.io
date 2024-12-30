@@ -2,7 +2,7 @@ name: Scheduled ETL
 
 on:
   schedule:
-    - cron: "20 22 * * *"
+    - cron: "50 23 * * *"
 
 jobs:
   import-data:
@@ -38,9 +38,11 @@ jobs:
           git commit -m 'Data updated' || echo "No changes to commit"
           git push origin main || echo "No changes to commit"
           
-      - name: Add Timestamp and force push
-        run: |
-          echo "Last updated: $(date)" > last_updated.txt
-          git add last_updated.txt
-          git commit -m 'Update timestamp'
-          git push origin main || echo "No changes to commit"
+      - name: Render and Publish
+        uses: quarto-dev/quarto-actions/publish@v2
+        with:
+          target: gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PROJECT_KEY: ${{ secrets.PROJECT_KEY }}
+          API_KEY: ${{ secrets.API_KEY }}
