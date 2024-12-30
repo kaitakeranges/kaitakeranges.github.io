@@ -2,7 +2,7 @@ name: Scheduled ETL
 
 on:
   schedule:
-    - cron: "0 18 * * *"
+    - cron: "50 20 * * *"
 
 jobs:
   import-data:
@@ -25,6 +25,7 @@ jobs:
       
       - name: Run ETL script
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           API_KEY: ${{ secrets.API_KEY }}
           PROJECT_KEY: ${{ secrets.PROJECT_KEY }}
         run: Rscript -e 'source("etl.R")'
@@ -36,3 +37,15 @@ jobs:
           git add *.rds
           git commit -m 'Data updated' || echo "No changes to commit"
           git push origin main || echo "No changes to commit"
+      
+      - name: Trigger Publish Workflow
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const octokit = require('@actions/github').getOctokit(process.env.GITHUB_TOKEN);
+            octokit.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'publish.yml',
+              ref: 'main',
+            });

@@ -31,12 +31,12 @@ df_trap_status <- cbind(df_trap_points, df_trap_properties)
   # filter(project_id == 708466) # Join coordinates to properties
 saveRDS(df_trap_status, file = "df_trap_status.rds")
 
-date_trap_status <- if(current_tz == "Pacific/Auckland") {
-  as.Date(Sys.time())
+if(current_tz == "Pacific/Auckland") {
+  date_refreshed <- as.Date(Sys.time())
   } else {
-    as.Date(Sys.time()) + lubridate::hours(13)
+  date_refreshed <- as.Date(Sys.time()) + lubridate::hours(13)
   }
-saveRDS(date_trap_status, file = "date_trap_status.rds")
+saveRDS(date_refreshed, file = "date_refreshed.rds")
 
 rm("df_traps", "df_trap_points_list", "df_trap_points", "df_trap_properties") # Remove the intermediate lists and dataframes
 #### 1. End of etl for df_trap_status. ####
@@ -70,7 +70,6 @@ repeat {
    }
    df_raw_content <- content(df_raw, "parsed", simplifyVector = TRUE)
    count_records <- nrow(df_raw_content$features$properties)
-   print(paste("get url: ",get_url))
    print(paste("count raw records: ", count_records))
    
    if(is.null(count_records) || count_records == 0) {
@@ -93,13 +92,6 @@ repeat {
        recorded_by,
        username
      ) %>%
-    # mutate(
-    #   record_date = if(current_tz == "Pacific/Auckland") {
-    #     as_datetime(record_date)
-    #   } else {
-    #     with_tz(as_datetime(record_date), tzone = "UTC")
-    #   }
-    # ) %>% 
     mutate(
       record_date = force_tz(as_datetime(record_date), tzone_out = "Pacific/Auckland")
     ) %>% 
@@ -287,8 +279,13 @@ repeat {
 
 saveRDS(startindex, file = "startindex.rds")
 saveRDS(df_trap_records, file = "df_trap_records.rds")
-saveRDS(max(as.Date(df_trap_records$record_date)), file = "date_trap_status.rds")
-saveRDS(as.Date(with_tz(Sys.time(), tzone = "Pacific/Auckland")), file = "date_refreshed.rds")
+
+if(current_tz == "Pacific/Auckland") {
+  date_trap_status <- as.Date(max(df_trap_records$record_date))
+} else {
+  date_trap_status <- as.Date(max(df_trap_records$record_date)) + lubridate::hours(13)
+}
+saveRDS(date_trap_status, file = "date_trap_status.rds")
 
 if(exists("df_raw")){rm("df_raw")}
 if(exists("df_raw_content")){rm("df_raw_content")}
@@ -369,7 +366,6 @@ trap_line_summary <- df_trap_records |>
    filter(species_caught != "None") |>
    summarize(
      last_catch = max(record_date),
-     #last_check = max(record_date),
      last_species = last(species_caught[record_date == max(record_date)])) |>
    ungroup() |>
    right_join(df_trap_records, by = "trap_id") |>
