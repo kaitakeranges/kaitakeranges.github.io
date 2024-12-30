@@ -1,7 +1,9 @@
 on:
   workflow_dispatch:
   push:
-    branches: main
+    branches: 
+      - main
+      - gh-pages
 
 name: Quarto Publish
 
