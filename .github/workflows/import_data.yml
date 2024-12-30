@@ -2,7 +2,7 @@ name: Scheduled ETL
 
 on:
   schedule:
-    - cron: "50 20 * * *"
+    - cron: "25 21 * * *"
 
 jobs:
   import-data:
@@ -37,15 +37,10 @@ jobs:
           git add *.rds
           git commit -m 'Data updated' || echo "No changes to commit"
           git push origin main || echo "No changes to commit"
-      
-      - name: Trigger Publish Workflow
-        uses: actions/github-script@v6
-        with:
-          script: |
-            const octokit = require('@actions/github').getOctokit(process.env.GITHUB_TOKEN);
-            octokit.rest.actions.createWorkflowDispatch({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              workflow_id: 'publish.yml',
-              ref: 'main',
-            });
+          
+      - name: Add Timestamp and force push
+        run: |
+          echo "Last updated: $(date)" > last_updated.txt
+          git add last_updated.txt
+          git commit -m 'Update timestamp'
+          git push origin main || echo "No changes to commit"
