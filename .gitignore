@@ -4,5 +4,6 @@
 .Ruserdata
 .Renviron
 workings.R
+dev_outputs/
 
 /.quarto/

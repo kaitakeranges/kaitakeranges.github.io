@@ -5,6 +5,9 @@ library(tidyverse)
 
 #### API calls to retrieve data from traps.nz. One call for trap status (1. df_trap_status), the second for trap records (2. df_trap_records)
 #### 1. df_trap_status. This holds data for trap installation date, last record etc. ####
+
+current_tz <- Sys.timezone()
+
 api_key <- Sys.getenv("API_KEY")
 project_key <- Sys.getenv("PROJECT_KEY")
 if (api_key == "") stop("API_KEY is not set")
@@ -28,7 +31,11 @@ df_trap_status <- cbind(df_trap_points, df_trap_properties)
   # filter(project_id == 708466) # Join coordinates to properties
 saveRDS(df_trap_status, file = "df_trap_status.rds")
 
-date_trap_status <- as.Date(with_tz(Sys.time(), tzone = "Pacific/Auckland"))
+date_trap_status <- if(current_tz == "Pacific/Auckland") {
+  as.Date(Sys.time())
+  } else {
+    as.Date(Sys.time()) + lubridate::hours(13)
+  }
 saveRDS(date_trap_status, file = "date_trap_status.rds")
 
 rm("df_traps", "df_trap_points_list", "df_trap_points", "df_trap_properties") # Remove the intermediate lists and dataframes
@@ -86,8 +93,15 @@ repeat {
        recorded_by,
        username
      ) %>%
+    # mutate(
+    #   record_date = if(current_tz == "Pacific/Auckland") {
+    #     as_datetime(record_date)
+    #   } else {
+    #     with_tz(as_datetime(record_date), tzone = "UTC")
+    #   }
+    # ) %>% 
     mutate(
-      record_date = with_tz(as_datetime(record_date), tzone = "Pacific/Auckland")
+      record_date = force_tz(as_datetime(record_date), tzone_out = "Pacific/Auckland")
     ) %>% 
     mutate(species_level_1 =
               case_when(
