@@ -2,7 +2,7 @@ name: Scheduled ETL
 
 on:
   schedule:
-    - cron: "40 03 * * *"
+    - cron: "45 19 * * *"
 
 jobs:
   import-data:
@@ -49,4 +49,3 @@ jobs:
               workflow_id: "publish.yml",
               ref: "main"
             });
-            console.log(response);
