@@ -2,7 +2,7 @@ name: Scheduled ETL
 
 on:
   schedule:
-    - cron: "30 02 * * *"
+    - cron: "10 03 * * *"
 
 jobs:
   import-data:
@@ -38,14 +38,14 @@ jobs:
           git commit -m 'Data updated' || echo "No changes to commit"
           git push origin main || echo "No changes to commit"
 
-      - name: Set up Quarto
-        uses: quarto-dev/quarto-actions/setup@v2
-
-      - name: Render and Publish
-        uses: quarto-dev/quarto-actions/publish@v2
+      - name: Trigger Publish Workflow
+        uses: actions/github-script@v6
         with:
-          target: gh-pages
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PROJECT_KEY: ${{ secrets.PROJECT_KEY }}
-          API_KEY: ${{ secrets.API_KEY }}
+          script: |
+            const response = await github.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: "publish.yml",
+              ref: "main"
+            });
+            console.log(response);
