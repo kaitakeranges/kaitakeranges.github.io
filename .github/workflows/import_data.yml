@@ -2,13 +2,14 @@ name: Scheduled ETL
 
 on:
   schedule:
-    - cron: "10 03 * * *"
+    - cron: "40 03 * * *"
 
 jobs:
   import-data:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      actions: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -42,7 +43,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const response = await github.actions.createWorkflowDispatch({
+            github.rest.actions.createWorkflowDispatch({
               owner: context.repo.owner,
               repo: context.repo.repo,
               workflow_id: "publish.yml",
