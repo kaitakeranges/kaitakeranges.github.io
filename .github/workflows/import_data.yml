@@ -2,7 +2,7 @@ name: Scheduled ETL
 
 on:
   schedule:
-    - cron: "50 23 * * *"
+    - cron: "30 02 * * *"
 
 jobs:
   import-data:
@@ -37,7 +37,10 @@ jobs:
           git add *.rds
           git commit -m 'Data updated' || echo "No changes to commit"
           git push origin main || echo "No changes to commit"
-          
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
       - name: Render and Publish
         uses: quarto-dev/quarto-actions/publish@v2
         with:
