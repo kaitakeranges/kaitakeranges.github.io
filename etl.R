@@ -395,7 +395,7 @@ if(exists("trap_species_caught")){rm("trap_species_caught")}
 if(exists("trap_line_summary")){rm("trap_line_summary")}
 
 # Create dataframe for trapstatus.qmd ----
-date_today <- as.Date(today())
+date_today <- readRDS("date_refreshed.rds")
 
 df_trap_status_2 <- readRDS("df_trap_records.rds") |>
   drop_na(line) |>
@@ -407,7 +407,7 @@ df_trap_status_2 <- readRDS("df_trap_records.rds") |>
     Trapper_anon
   ) |>
   mutate(record_date = as.Date(record_date)) |>
-  mutate(days_since = as.numeric(as.Date(with_tz(Sys.time(), tzone = "Pacific/Auckland")) - as.Date(record_date))) |>
+  mutate(days_since = as.numeric(as.Date(date_today) - as.Date(record_date))) |>
   select(line, Trapper_anon, record_date, days_since) |>
   group_by(line, Trapper_anon, record_date, days_since) |>
   summarize(
