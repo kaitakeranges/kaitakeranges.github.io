@@ -404,15 +404,39 @@ df_trap_status_2 <- readRDS("df_trap_records.rds") |>
     line,
     trap_code,
     record_date,
-    Trapper_anon
+    Trapper_anon,
+    species_level_2
   ) |>
   mutate(record_date = as.Date(record_date)) |>
   mutate(days_since = as.numeric(as.Date(date_today) - as.Date(record_date))) |>
-  select(line, Trapper_anon, record_date, days_since) |>
+  select(line, Trapper_anon, record_date, days_since, species_level_2) |>
   group_by(line, Trapper_anon, record_date, days_since) |>
   summarize(
-    traps = n()
+    traps = n(),
+    rats = sum(species_level_2 == "Rat"),
+    mustelids = sum(species_level_2 == "Mustelid")
   ) |>
   arrange(line, desc(record_date))
+
+generate_icons <- function(count, icon_path) {
+  if (count > 0) {
+    paste0(
+      sapply(
+        seq_len(count),
+        function(x) sprintf('<img src="%s" style="height:20px;width:20px;margin-right:2px;" />', icon_path)
+      ),
+      collapse = ""
+    )
+  } else {
+    ""
+  }
+}
+
+df_trap_status_2 <- df_trap_status_2 %>%  
+  mutate(
+    Mustelid_Icons = sapply(mustelids, generate_icons, icon_path = "/images/stoat.svg"),
+    Rat_Icons = sapply(rats, generate_icons, icon_path = "/images/rat.svg"),
+    Catch_Icons = paste0(Mustelid_Icons, Rat_Icons)
+  )
 
 saveRDS(df_trap_status_2, file = "df_trap_status_2.rds")

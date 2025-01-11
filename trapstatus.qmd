@@ -39,7 +39,11 @@ reactable(
   defaultPageSize = 30,
   groupBy = "line",
   columns = list(
-    line = colDef(name = "Trap Line", minWidth = 160, headerStyle = list(backgroundColor = '#047C90', color= '#d2e3f3'),
+    rats = colDef(show = FALSE),
+    mustelids = colDef(show = FALSE),
+    Mustelid_Icons = colDef(show = FALSE),
+    Rat_Icons = colDef(show = FALSE),
+    line = colDef(name = "Trap Line", minWidth = 200, maxWidth = 200, headerStyle = list(backgroundColor = '#047C90', color= '#d2e3f3'),
     style = JS(
       "function(rowInfo) {
           if (rowInfo.aggregated) {
@@ -53,7 +57,7 @@ reactable(
         return {}
       }"
     )),
-    record_date = colDef(aggregate = "max", name = "Date Checked", maxWidth = 120, headerStyle = list(backgroundColor = '#047C90', color= '#d2e3f3'),
+    record_date = colDef(aggregate = "max", name = "Date Checked", minWidth = 90, maxWidth = 90, headerStyle = list(backgroundColor = '#047C90', color= '#d2e3f3'),
     style = JS(
       "function(rowInfo) {
           if (rowInfo.aggregated) {
@@ -67,7 +71,7 @@ reactable(
       return { backgroundColor: '#047C90', color: '#d2e3f3', borderRight : '1px solid rgba(255, 255, 255, 1)'}
       }"
     )),
-    days_since = colDef(aggregate = "min", name = "Days Since Checked", maxWidth = 120, headerStyle = list(backgroundColor = '#047C90', color= '#d2e3f3'),
+    days_since = colDef(aggregate = "min", name = "Days Since Checked", minWidth = 90, maxWidth = 100, headerStyle = list(backgroundColor = '#047C90', color= '#d2e3f3'),
       style = JS(
         "function(rowInfo) {
             if (rowInfo.aggregated) {
@@ -81,7 +85,7 @@ reactable(
         return { backgroundColor: '#047C90', color: '#d2e3f3', borderRight : '1px solid rgba(255, 255, 255, 1)'}
         }"
     )),
-    traps = colDef(aggregate = "max", name = "No. Traps", maxWidth = 120, headerStyle = list(backgroundColor = '#047C90', color= '#d2e3f3'),
+    traps = colDef(aggregate = "max", name = "No. Traps", minWidth = 80, maxWidth = 80, headerStyle = list(backgroundColor = '#047C90', color= '#d2e3f3'),
       style = JS(
         "function(rowInfo) {
             if (rowInfo.aggregated) {
@@ -95,7 +99,7 @@ reactable(
         return { backgroundColor: '#047C90', color: '#d2e3f3', borderRight : '1px solid rgba(255, 255, 255, 1)'}
         }"
     )),
-      Trapper_anon = colDef(name = "Trapper", headerStyle = list(backgroundColor = '#047C90', color= '#d2e3f3'),
+      Trapper_anon = colDef(name = "Trapper", minWidth = 110, maxWidth = 110, headerStyle = list(backgroundColor = '#047C90', color= '#d2e3f3'),
         style = JS(
           "function(rowInfo) {
             if (rowInfo.aggregated)
@@ -104,7 +108,16 @@ reactable(
               return {backgroundColor: '#047C90', color: '#d2e3f3', borderRight : '1px solid rgba(255, 255, 255, 1)'}
           }"
         )
-      )
+      ),
+    Catch_Icons = colDef(name = "Catches", minWidth = 200, html = TRUE, headerStyle = list(backgroundColor = '#047C90', color= '#d2e3f3'),
+        style = JS(
+          "function(rowInfo) {
+            if (rowInfo.aggregated)
+              return {}
+            else
+              return {backgroundColor: '#047C90', color: '#d2e3f3', borderRight : '1px solid rgba(255, 255, 255, 1)'}
+          }"
+        ))
   ),
   defaultSorted = list("days_since" = "asc", "record_date" = "asc"),
   theme = reactableTheme(
