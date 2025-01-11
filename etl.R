@@ -434,8 +434,8 @@ generate_icons <- function(count, icon_path) {
 
 df_trap_status_2 <- df_trap_status_2 %>%  
   mutate(
-    Mustelid_Icons = sapply(mustelids, generate_icons, icon_path = "/images/stoat.svg"),
-    Rat_Icons = sapply(rats, generate_icons, icon_path = "/images/rat.svg"),
+    Mustelid_Icons = sapply(mustelids, generate_icons, icon_path = "stoat.svg"),
+    Rat_Icons = sapply(rats, generate_icons, icon_path = "rat.svg"),
     Catch_Icons = paste0(Mustelid_Icons, Rat_Icons)
   )
 
