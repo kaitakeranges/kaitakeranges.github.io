@@ -1,7 +1,7 @@
 ---
 title: "Trap Line Status"
 subtitle: |
-  `r paste('Last data refresh:', readRDS('date_refreshed.rds'))` <br>
+  `r paste('Last data refresh:', strftime(readRDS('date_refreshed.rds')))` <br>
   `r paste('Latest trap record:', readRDS('date_trap_status.rds'))`
 format: html
 ---

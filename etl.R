@@ -13,10 +13,8 @@ project_key <- Sys.getenv("PROJECT_KEY")
 if (api_key == "") stop("API_KEY is not set")
 if (project_key == "") stop("PROJECT_KEY is not set")
 
-
 base_url <- 'https://io.trap.nz/geo/trapnz-projects/wfs/'
 end_url <- "?service=WFS&version=2.0.0&request=GetFeature&typeName=trapnz-projects:my-projects-traps&outputFormat=json"
-
 
 df_traps <- fromJSON(paste0(base_url, api_key, "/", project_key, end_url)) # Full result for traps
 df_trap_points_list <- df_traps[[2]][3]$geometry # Parse the trap geometry first into a dataframe
@@ -28,7 +26,7 @@ df_trap_points <- do.call(rbind, lapply(df_trap_points_list$coordinates, functio
 df_trap_properties <- df_traps$features$properties # Parse the trap properties into a second dataframe
 
 df_trap_status <- cbind(df_trap_points, df_trap_properties)
-  # filter(project_id == 708466) # Join coordinates to properties
+
 saveRDS(df_trap_status, file = "df_trap_status.rds")
 
 if(current_tz == "Pacific/Auckland") {
@@ -40,7 +38,6 @@ saveRDS(date_refreshed, file = "date_refreshed.rds")
 
 rm("df_traps", "df_trap_points_list", "df_trap_points", "df_trap_properties") # Remove the intermediate lists and dataframes
 #### 1. End of etl for df_trap_status. ####
-
 
 
 # 2. df_trap_records ----
@@ -241,22 +238,26 @@ repeat {
        year = year(as.Date(record_date)),
        last_14_days =
          case_when(
-           as.Date(with_tz(Sys.time(), tzone = "Pacific/Auckland")) <= as.Date(record_date) + 14 ~ 1,
+           #as.Date(with_tz(Sys.time(), tzone = "Pacific/Auckland")) <= as.Date(record_date) + 14 ~ 1,
+           as.Date(readRDS("date_refreshed.rds")) <= as.Date(record_date) + 14 ~ 1,
            TRUE ~ 0
          ),
        last_28_days =
          case_when(
-           as.Date(with_tz(Sys.time(), tzone = "Pacific/Auckland")) <= as.Date(record_date) + 28 ~ 1,
+           #as.Date(with_tz(Sys.time(), tzone = "Pacific/Auckland")) <= as.Date(record_date) + 28 ~ 1,
+           as.Date(readRDS("date_refreshed.rds")) <= as.Date(record_date) + 28 ~ 1,
            TRUE ~ 0
          ),
        last_14_days_ly =
          case_when(
-           as.Date(with_tz(Sys.time(), tzone = "Pacific/Auckland")) - 365 <= as.Date(record_date) + 14 & as.Date(with_tz(Sys.time(), tzone = "Pacific/Auckland")) - 365 > as.Date(record_date) ~ 1,
+           #as.Date(with_tz(Sys.time(), tzone = "Pacific/Auckland")) - 365 <= as.Date(record_date) + 14 & as.Date(with_tz(Sys.time(), tzone = "Pacific/Auckland")) - 365 > as.Date(record_date) ~ 1,
+           as.Date(read_RDS("date_refreshed.rds")) - 365 <= as.Date(record_date) + 14 & as.Date(readRDS("date_refreshed.rds")) - 365 > as.Date(record_date) ~ 1,
            TRUE ~ 0
          ),
        last_28_days_ly =
          case_when(
-           as.Date(with_tz(Sys.time(), tzone = "Pacific/Auckland")) - 365 <= as.Date(record_date) + 28 & as.Date(with_tz(Sys.time(), tzone = "Pacific/Auckland")) - 365 > as.Date(record_date) ~ 1,
+           #as.Date(with_tz(Sys.time(), tzone = "Pacific/Auckland")) - 365 <= as.Date(record_date) + 28 & as.Date(with_tz(Sys.time(), tzone = "Pacific/Auckland")) - 365 > as.Date(record_date) ~ 1,
+           as.Date(readRDS("date_refreshed.rds")) - 365 <= as.Date(record_date) + 28 & as.Date(readRDS("date_refreshed.rds")) - 365 > as.Date(record_date) ~ 1,
            TRUE ~ 0
          ),
        yyyy_ww = strftime(as.Date(record_date), "%Y-%V")
