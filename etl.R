@@ -251,7 +251,7 @@ repeat {
        last_14_days_ly =
          case_when(
            #as.Date(with_tz(Sys.time(), tzone = "Pacific/Auckland")) - 365 <= as.Date(record_date) + 14 & as.Date(with_tz(Sys.time(), tzone = "Pacific/Auckland")) - 365 > as.Date(record_date) ~ 1,
-           as.Date(read_RDS("date_refreshed.rds")) - 365 <= as.Date(record_date) + 14 & as.Date(readRDS("date_refreshed.rds")) - 365 > as.Date(record_date) ~ 1,
+           as.Date(readRDS("date_refreshed.rds")) - 365 <= as.Date(record_date) + 14 & as.Date(readRDS("date_refreshed.rds")) - 365 > as.Date(record_date) ~ 1,
            TRUE ~ 0
          ),
        last_28_days_ly =
