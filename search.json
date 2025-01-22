@@ -1,10 +1,10 @@
 [
   {
-    "objectID": "trapline.html",
-    "href": "trapline.html",
-    "title": "Trap Line Summary",
+    "objectID": "trapstatus.html",
+    "href": "trapstatus.html",
+    "title": "Trap Line Status",
     "section": "",
-    "text": "This table gives some summary information for each trap within the trapping project. You can use the search box below each column header to filter on a specific item (e.g. a specific trap line, trap, date or last species caught). There is also a generic search box which will search any column.  Clicking on any of the column headers will allow you to sort. Keep clicking to toggle between ascending or descending. If you want to sort by more than one column, hold the shift button down when clicking any subsequent columns. Keep holding the shift button down if you want to reverse the sort order.  Examples on how you might use this table include;\n\n\nSearch for your trap line\n\n\nSort by last species caught (or use the search filter again) to find which traps catch the most or least of any species\n\n\nSort by last catch date to see which traps have caught recently and what species that was\n\n\nSort by days since last catch to see which traps haven’t had a recent catch\n\n\n You can expand the number of rows with the ‘Show’ drop down selection at the bottom of the table."
+    "text": "Trap Status\n\n\n\n\nThe target is to have traps checked every 2 weeks. The table below uses colour coding of;\n\n\n\n\n14 Days: green\n\n\n\n\n28 Days: yellow\n\n\n\n\n28+ Days: red\n\n\n\n\n\nExpand any trap line to see who most recently checked, and when.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThis chart shows the cumulative number of traps checked within the last (x) days"
   },
   {
     "objectID": "index.html",
@@ -12,13 +12,6 @@
     "title": "Kaitake Ranges Conservation Trust",
     "section": "",
     "text": "Contents\n\n\n\n\nAbout: The Why’s, Where’s, Who’s and What’s\n\n\n\n\nStatus: Statistics of catch history for the traps managed\n\n\n\n\nTrap Line Summary: An interactive table for interrogating Lines and Traps\n\n\n\n\nTrap Line Status: An interactive table showing servicing history by trap line"
-  },
-  {
-    "objectID": "trapstatus.html",
-    "href": "trapstatus.html",
-    "title": "Trap Line Status",
-    "section": "",
-    "text": "Trap Status\n\n\n\n\nThe target is to have traps checked every 2 weeks. The table below uses colour coding of;\n\n\n\n\n14 Days: green\n\n\n\n\n28 Days: yellow\n\n\n\n\n28+ Days: red\n\n\n\n\n\nExpand any trap line to see who most recently checked, and when.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThis chart shows the cumulative number of traps checked within the last (x) days"
   },
   {
     "objectID": "about.html",
@@ -33,5 +26,12 @@
     "title": "Trap Line Summary and Status",
     "section": "",
     "text": "A Summary of catches by year, and also the last 2 and 4 weeks with comparison to the 2 and 4 week windows for the same time of year from the prior year."
+  },
+  {
+    "objectID": "trapline.html",
+    "href": "trapline.html",
+    "title": "Trap Line Summary",
+    "section": "",
+    "text": "This table gives some summary information for each trap within the trapping project. You can use the search box below each column header to filter on a specific item (e.g. a specific trap line, trap, date or last species caught). There is also a generic search box which will search any column.  Clicking on any of the column headers will allow you to sort. Keep clicking to toggle between ascending or descending. If you want to sort by more than one column, hold the shift button down when clicking any subsequent columns. Keep holding the shift button down if you want to reverse the sort order.  Examples on how you might use this table include;\n\n\nSearch for your trap line\n\n\nSort by last species caught (or use the search filter again) to find which traps catch the most or least of any species\n\n\nSort by last catch date to see which traps have caught recently and what species that was\n\n\nSort by days since last catch to see which traps haven’t had a recent catch\n\n\n You can expand the number of rows with the ‘Show’ drop down selection at the bottom of the table."
   }
 ]
