@@ -11,10 +11,10 @@ title: "Kaitake Ranges Conservation Trust"
 ::: {.text-content}
 <h2 style="text-align:centre;">Contents</h2>
 <ul type = "dot">
-<li><h5>About: The Why's, Where's, Who's and What's</h5></li>
-<li><h5>Status: Statistics of catch history for the traps managed</h5></li>
-<li><h5>Trap Line Summary: An interactive table for interrogating Lines and Traps</h5></li>
-<li><h5>Trap Line Status: An interactive table showing servicing history by trap line</h5></li>
+<li><h5><a href="about.html">About</a>: The Why's, Where's, Who's and What's</h5></li>
+<li><h5><a href="status.html">Status</a>: Statistics of catch history for the traps managed</h5></li>
+<li><h5><a href="trapline.html">Trap Line Summary</a>: An interactive table for interrogating Lines and Traps</h5></li>
+<li><h5><a href="trapstatus.html">Trap Line Status</a>: An interactive table showing servicing history by trap line</h5></li>
 </ul>
 :::
 
