@@ -5,27 +5,26 @@ subtitle: |
   `r paste('Latest trap record:', readRDS('date_trap_status.rds'))`
 format: html
 ---
-::::: {.image-text-box}
+::: {.grid}
 
-:::: {.img}
-<img src="/Kaitake_Fungi_2.png" width="400px" class="rounded-image"></img>
-::::
-
-::: {.text-content}
+::: {.g-col-12 .g-col-lg-6}
+<img src="/Kaitake_Fungi_2.png" class="rounded-image mx-auto d-block" alt="photo of green mushrooms" />
+:::
+  
+::: {.g-col-12 .g-col-lg-6}
 <h2 style="text-align:centre;">Trap Status</h2>
+The target is to have traps checked every 2 weeks. The table below uses colour coding of;
 <ul type = "dot">
-<li><h5>The target is to have traps checked every 2 weeks. The table below uses colour coding of;</h5></li>
-<li><h5>14 Days: green</h5></li>
-<li><h5>28 Days: yellow</h5></li>
-<li><h5>28+ Days: red</h5></li>
+  <li>14 Days: green</li>
+  <li>28 Days: yellow</li>
+  <li>28+ Days: red</li>
 </ul>
-<br>
-<h5>Expand any trap line to see who most recently checked, and when.</h5>
+Expand any trap line to see who most recently checked, and when.
 :::
 
-:::::
+:::
 
-<hr style="border: 1px '#d2e3f3';">
+
 <hr style="border: 1px '#d2e3f3';">
 
 ```{r, echo=FALSE, warning = FALSE}
@@ -128,7 +127,6 @@ reactable(
 ```
 
 <hr style="border: 1px '#d2e3f3';">
-<hr style="border: 1px '#d2e3f3';">
 
-<h5>This chart shows the cumulative number of traps checked within the last (x) days</h5>
-<br>
+This chart shows the cumulative number of traps checked within the last (x) days
+<br />

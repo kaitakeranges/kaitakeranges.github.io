@@ -2,20 +2,22 @@
 title: "Kaitake Ranges Conservation Trust"
 ---
 
-::::: {.image-text-box}
+::: {.grid}
 
-:::: {.img}
-<img src="KTrust.png" width="450px" class="rounded-image"></img>
-::::
+::: {.g-col-12 .g-col-lg-6}
+<img src="KTrust.png" width="450px" class="rounded-image" alt="Kaitake Ranges Conservation Trust Logo" />
+:::
+  
+::: {.g-col-12 .g-col-lg-6}
 
-::: {.text-content}
 <h2 style="text-align:centre;">Contents</h2>
 <ul type = "dot">
-<li><h5><a href="about.html">About</a>: The Why's, Where's, Who's and What's</h5></li>
-<li><h5><a href="status.html">Status</a>: Statistics of catch history for the traps managed</h5></li>
-<li><h5><a href="trapline.html">Trap Line Summary</a>: An interactive table for interrogating Lines and Traps</h5></li>
-<li><h5><a href="trapstatus.html">Trap Line Status</a>: An interactive table showing servicing history by trap line</h5></li>
+<li><a href="about.html">About</a>: The Why's, Where's, Who's and What's</li>
+<li><a href="status.html">Status</a>: Statistics of catch history for the traps managed</li>
+<li><a href="trapline.html">Trap Line Summary</a>: An interactive table for interrogating Lines and Traps</li>
+<li><a href="trapstatus.html">Trap Line Status</a>: An interactive table showing servicing history by trap line</li>
 </ul>
-:::
 
-:::::
+:::
+  
+::: 

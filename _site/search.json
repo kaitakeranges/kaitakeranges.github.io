@@ -4,7 +4,7 @@
     "href": "trapstatus.html",
     "title": "Trap Line Status",
     "section": "",
-    "text": "Trap Status\n\n\n\n\nThe target is to have traps checked every 2 weeks. The table below uses colour coding of;\n\n\n\n\n14 Days: green\n\n\n\n\n28 Days: yellow\n\n\n\n\n28+ Days: red\n\n\n\n\n\nExpand any trap line to see who most recently checked, and when.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThis chart shows the cumulative number of traps checked within the last (x) days"
+    "text": "Trap Status\n\nThe target is to have traps checked every 2 weeks. The table below uses colour coding of;\n\n\n14 Days: green\n\n\n28 Days: yellow\n\n\n28+ Days: red\n\n\nExpand any trap line to see who most recently checked, and when.\n\n\n\n\n\n\n\n\n\n\nThis chart shows the cumulative number of traps checked within the last (x) days"
   },
   {
     "objectID": "status.html",
@@ -25,7 +25,7 @@
     "href": "index.html",
     "title": "Kaitake Ranges Conservation Trust",
     "section": "",
-    "text": "Contents\n\n\n\n\nAbout: The Why’s, Where’s, Who’s and What’s\n\n\n\n\nStatus: Statistics of catch history for the traps managed\n\n\n\n\nTrap Line Summary: An interactive table for interrogating Lines and Traps\n\n\n\n\nTrap Line Status: An interactive table showing servicing history by trap line"
+    "text": "Contents\n\n\n\nAbout: The Why’s, Where’s, Who’s and What’s\n\n\nStatus: Statistics of catch history for the traps managed\n\n\nTrap Line Summary: An interactive table for interrogating Lines and Traps\n\n\nTrap Line Status: An interactive table showing servicing history by trap line"
   },
   {
     "objectID": "trapline.html",
