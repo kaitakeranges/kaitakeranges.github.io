@@ -7,13 +7,6 @@
     "text": "This table gives some summary information for each trap within the trapping project. You can use the search box below each column header to filter on a specific item (e.g. a specific trap line, trap, date or last species caught). There is also a generic search box which will search any column.  Clicking on any of the column headers will allow you to sort. Keep clicking to toggle between ascending or descending. If you want to sort by more than one column, hold the shift button down when clicking any subsequent columns. Keep holding the shift button down if you want to reverse the sort order.  Examples on how you might use this table include;\n\n\nSearch for your trap line\n\n\nSort by last species caught (or use the search filter again) to find which traps catch the most or least of any species\n\n\nSort by last catch date to see which traps have caught recently and what species that was\n\n\nSort by days since last catch to see which traps haven’t had a recent catch\n\n\n You can expand the number of rows with the ‘Show’ drop down selection at the bottom of the table."
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Kaitake Ranges Conservation Trust",
-    "section": "",
-    "text": "Contents\n\n\n\nAbout: The Why’s, Where’s, Who’s and What’s\n\n\nStatus: Statistics of catch history for the traps managed\n\n\nTrap Line Summary: An interactive table for interrogating Lines and Traps\n\n\nTrap Line Status: An interactive table showing servicing history by trap line"
-  },
-  {
     "objectID": "trapstatus.html",
     "href": "trapstatus.html",
     "title": "Trap Line Status",
@@ -26,6 +19,13 @@
     "title": "About",
     "section": "",
     "text": "About this site\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Kaitake Ranges Conservation Trust",
+    "section": "",
+    "text": "Contents\n\n\n\nAbout: The Why’s, Where’s, Who’s and What’s\n\n\nStatus: Statistics of catch history for the traps managed\n\n\nTrap Line Summary: An interactive table for interrogating Lines and Traps\n\n\nTrap Line Status: An interactive table showing servicing history by trap line"
   },
   {
     "objectID": "status.html",
