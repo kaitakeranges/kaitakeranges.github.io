@@ -236,30 +236,10 @@ repeat {
       ) |>
     mutate(
        year = year(as.Date(record_date)),
-       last_14_days =
-         case_when(
-           #as.Date(with_tz(Sys.time(), tzone = "Pacific/Auckland")) <= as.Date(record_date) + 14 ~ 1,
-           as.Date(readRDS("date_refreshed.rds")) <= as.Date(record_date) + 14 ~ 1,
-           TRUE ~ 0
-         ),
-       last_28_days =
-         case_when(
-           #as.Date(with_tz(Sys.time(), tzone = "Pacific/Auckland")) <= as.Date(record_date) + 28 ~ 1,
-           as.Date(readRDS("date_refreshed.rds")) <= as.Date(record_date) + 28 ~ 1,
-           TRUE ~ 0
-         ),
-       last_14_days_ly =
-         case_when(
-           #as.Date(with_tz(Sys.time(), tzone = "Pacific/Auckland")) - 365 <= as.Date(record_date) + 14 & as.Date(with_tz(Sys.time(), tzone = "Pacific/Auckland")) - 365 > as.Date(record_date) ~ 1,
-           as.Date(readRDS("date_refreshed.rds")) - 365 <= as.Date(record_date) + 14 & as.Date(readRDS("date_refreshed.rds")) - 365 > as.Date(record_date) ~ 1,
-           TRUE ~ 0
-         ),
-       last_28_days_ly =
-         case_when(
-           #as.Date(with_tz(Sys.time(), tzone = "Pacific/Auckland")) - 365 <= as.Date(record_date) + 28 & as.Date(with_tz(Sys.time(), tzone = "Pacific/Auckland")) - 365 > as.Date(record_date) ~ 1,
-           as.Date(readRDS("date_refreshed.rds")) - 365 <= as.Date(record_date) + 28 & as.Date(readRDS("date_refreshed.rds")) - 365 > as.Date(record_date) ~ 1,
-           TRUE ~ 0
-         ),
+       last_14_days = 0,
+       last_28_days = 0,
+       last_14_days_ly = 0,
+       last_28_days_ly = 0,
        yyyy_ww = strftime(as.Date(record_date), "%Y-%V")
      )
 
@@ -277,6 +257,34 @@ repeat {
    startindex <- startindex + count_records
    print(paste("startindex now: ", startindex))
 }
+
+df_trap_records <- df_trap_records %>% 
+  mutate(
+    last_14_days =
+      case_when(
+        #as.Date(with_tz(Sys.time(), tzone = "Pacific/Auckland")) <= as.Date(record_date) + 14 ~ 1,
+        as.Date(readRDS("date_refreshed.rds")) <= as.Date(record_date) + 14 ~ 1,
+        TRUE ~ 0
+      ),
+    last_28_days =
+      case_when(
+        #as.Date(with_tz(Sys.time(), tzone = "Pacific/Auckland")) <= as.Date(record_date) + 28 ~ 1,
+        as.Date(readRDS("date_refreshed.rds")) <= as.Date(record_date) + 28 ~ 1,
+        TRUE ~ 0
+      ),
+    last_14_days_ly =
+      case_when(
+        #as.Date(with_tz(Sys.time(), tzone = "Pacific/Auckland")) - 365 <= as.Date(record_date) + 14 & as.Date(with_tz(Sys.time(), tzone = "Pacific/Auckland")) - 365 > as.Date(record_date) ~ 1,
+        as.Date(readRDS("date_refreshed.rds")) - 365 <= as.Date(record_date) + 14 & as.Date(readRDS("date_refreshed.rds")) - 365 > as.Date(record_date) ~ 1,
+        TRUE ~ 0
+      ),
+    last_28_days_ly =
+      case_when(
+        #as.Date(with_tz(Sys.time(), tzone = "Pacific/Auckland")) - 365 <= as.Date(record_date) + 28 & as.Date(with_tz(Sys.time(), tzone = "Pacific/Auckland")) - 365 > as.Date(record_date) ~ 1,
+        as.Date(readRDS("date_refreshed.rds")) - 365 <= as.Date(record_date) + 28 & as.Date(readRDS("date_refreshed.rds")) - 365 > as.Date(record_date) ~ 1,
+        TRUE ~ 0
+      )
+  )
 
 saveRDS(startindex, file = "startindex.rds")
 saveRDS(df_trap_records, file = "df_trap_records.rds")
