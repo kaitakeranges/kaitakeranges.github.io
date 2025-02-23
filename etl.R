@@ -427,12 +427,12 @@ df_trap_status_2 <- readRDS("df_trap_records.rds") |>
   ) |>
   arrange(line, desc(record_date))
 
-generate_icons <- function(count, icon_path) {
+generate_icons <- function(count, icon_path, title) {
   if (count > 0) {
     paste0(
       sapply(
         seq_len(count),
-        function(x) sprintf('<img src="%s" style="height:20px;width:20px;margin-right:2px;" />', icon_path)
+        function(x) sprintf('<img src="%s" style="height:20px;width:20px;margin-right:2px;" title="%s" />', icon_path, title)
       ),
       collapse = ""
     )
@@ -441,10 +441,19 @@ generate_icons <- function(count, icon_path) {
   }
 }
 
+generate_title <- function(mustelid_count, rat_count) {
+  mustelid_title = ""
+  rat_title = ""
+  sep <- ifelse(rat_count > 0 && mustelid_count > 0, ", ", "")
+  mustelid_title <- ifelse(mustelid_count > 0, sprintf("%s mustelid(s)", mustelid_count), "")
+  rat_title <- ifelse(rat_count > 0, sprintf("%s rat(s)", rat_count), "")
+  return (paste(mustelid_title, rat_title, sep=sep))
+}
+
 df_trap_status_2 <- df_trap_status_2 %>%  
   mutate(
-    Mustelid_Icons = sapply(mustelids, generate_icons, icon_path = "/stoat.svg"),
-    Rat_Icons = sapply(rats, generate_icons, icon_path = "/rat.svg"),
+    Mustelid_Icons = sapply(mustelids, generate_icons, icon_path = "/stoat.svg", title=generate_title(mustelids,rats)),
+    Rat_Icons = sapply(rats, generate_icons, icon_path = "/rat.svg", title=generate_title(mustelids,rats)),
     Catch_Icons = paste0(Mustelid_Icons, Rat_Icons)
   )
 
