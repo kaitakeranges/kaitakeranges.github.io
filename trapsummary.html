@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.6.41">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -35,10 +35,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-71390cc8b9bae10139428574d3aab2c6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-02a507820c2b0219e4c6215c4bb3bd86.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -67,21 +67,13 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 <script src="site_libs/core-js-2.5.3/shim.min.js"></script>
-
 <script src="site_libs/react-18.2.0/react.min.js"></script>
-
 <script src="site_libs/react-18.2.0/react-dom.min.js"></script>
-
 <script src="site_libs/reactwidget-2.0.0/react-tools.js"></script>
-
 <link href="site_libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
-
 <script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
-
 <link href="site_libs/reactable-0.4.4/reactable.css" rel="stylesheet">
-
 <script src="site_libs/reactable-binding-0.4.4/reactable.js"></script>
-
 
 
 </head>
@@ -114,9 +106,9 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Status</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./trapline.html" aria-current="page"> <i class="bi bi-table" role="img">
+    <a class="nav-link active" href="./trapsummary.html" aria-current="page"> <i class="bi bi-table" role="img">
 </i> 
-<span class="menu-text">Trap Line Summary</span></a>
+<span class="menu-text">Trap Summary</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./traplinestatus.html"> <i class="bi bi-file-bar-graph" role="img">
@@ -143,7 +135,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Trap Summary</h1>
-<p class="subtitle lead"></p><p>Last data refresh: 2025-02-24 20:43:54 <br> Latest trap record: 2025-02-24 10:12:00</p><p></p>
+<p class="subtitle lead"></p><p>Last data refresh: 2025-02-24 07:43:54 <br> Latest trap record: 2025-02-23 21:12:00</p><p></p>
 </div>
 
 
@@ -268,8 +260,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -278,7 +268,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
+      var filterRegex = new RegExp("https:\/\/kaitakeranges\.github\.io\/");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
@@ -380,7 +370,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
