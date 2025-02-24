@@ -12,7 +12,7 @@ format: html
 :::
   
 ::: {.g-col-12 .g-col-lg-6}
-<h2 style="text-align:centre;">Trap Status</h2>
+<h2 style="text-align:centre;">Trap Line Status</h2>
 The target is to have traps checked every 2 weeks. The table below uses colour coding of;
 <ul type = "dot">
   <li>14 Days: green</li>

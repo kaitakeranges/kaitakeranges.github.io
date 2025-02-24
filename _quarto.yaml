@@ -14,11 +14,11 @@ website:
       - text: "Status"
         href: status.qmd
         icon: file-bar-graph
-      - text: "Trap Line Summary"
-        href: trapline.qmd
+      - text: "Trap Summary"
+        href: trapsummary.qmd
         icon: table
       - text: "Trap Line Status"
-        href: trapstatus.qmd
+        href: traplinestatus.qmd
         icon: file-bar-graph
   page-footer:
     An R Quarto Website <br>

@@ -14,8 +14,8 @@ title: "Kaitake Ranges Conservation Trust"
 <ul type = "dot">
 <li><a href="about.html">About</a>: The Why's, Where's, Who's and What's</li>
 <li><a href="status.html">Status</a>: Statistics of catch history for the traps managed</li>
-<li><a href="trapline.html">Trap Line Summary</a>: An interactive table for interrogating Lines and Traps</li>
-<li><a href="trapstatus.html">Trap Line Status</a>: An interactive table showing servicing history by trap line</li>
+<li><a href="trapsummary.html">Trap Summary</a>: An interactive table for interrogating the status of traps</li>
+<li><a href="traplinestatus.html">Trap Line Status</a>: An interactive table showing servicing history by trap line</li>
 </ul>
 
 :::
