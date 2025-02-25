@@ -10,14 +10,24 @@ title: "Kaitake Ranges Conservation Trust"
   
 ::: {.g-col-12 .g-col-lg-6}
 
-<h2 style="text-align:centre;">Contents</h2>
-<ul type = "dot">
-<li><a href="about.html">About</a>: The Why's, Where's, Who's and What's</li>
-<li><a href="status.html">Status</a>: Statistics of catch history for the traps managed</li>
-<li><a href="trapsummary.html">Trap Summary</a>: An interactive table for interrogating the status of traps</li>
-<li><a href="traplinestatus.html">Trap Line Status</a>: An interactive table showing servicing history by trap line</li>
-</ul>
-
+<p>
+  The <a href="https://www.facebook.com/kaitakeconservation/" target="_blank">Kaitake Ranges Conservation Trust</a> is a community volunteer group that help manage and run the stoat and ferret trapping network in the <a href="https://en.wikipedia.org/wiki/Kaitake_Range" target="_blank">Kaitake Ranges</a>, which are the northern most part of Te Papakura o Taranaki/Egmont National Park.
+</p>
+<p>
+  This website is used to surface the catch data that we record in a way to make it easily accessible and useful to our members. New data is loaded nightly into this site for display. These flags indicate if the load process is working:
+</p>
+<p class="d-flex justify-content-center">
+  <img src="https://github.com/kaitakeranges/kaitakeranges.github.io/actions/workflows/import_data.yml/badge.svg" alt="ETL workflow status badge" style="margin-right: 10px" />
+  <img src="https://github.com/kaitakeranges/kaitakeranges.github.io/actions/workflows/publish.yml/badge.svg" alt="Publish workflow status badge" />
+</p>
+<p>
+  The site is made up of these sections:
+  <ul type = "dot">
+  <li><a href="status.html">Catch Summary</a>: An overall summary of catches over time</li>
+  <li><a href="trapsummary.html">Trap Summary</a>: An interactive table for interrogating the status of traps and how well each trap is doing</li>
+  <li><a href="traplinestatus.html">Trap Line Status</a>: An interactive table showing servicing history by trap line and highlighing whether lines are overdue for checks</li>
+  </ul>
+</p>
 :::
   
 ::: 

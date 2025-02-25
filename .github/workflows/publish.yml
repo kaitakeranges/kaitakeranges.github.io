@@ -5,7 +5,7 @@ on:
       - main
       - gh-pages
 
-name: Quarto Publish
+name: Website Publish
 
 jobs:
   build-deploy:

@@ -11,8 +11,8 @@ website:
       - text: "Home"
         href: index.qmd
         icon: house-door
-      - text: "Status"
-        href: status.qmd
+      - text: "Catch Summary"
+        href: catchsummary.qmd
         icon: file-bar-graph
       - text: "Trap Summary"
         href: trapsummary.qmd
@@ -22,8 +22,8 @@ website:
         icon: file-bar-graph
   page-footer:
     An R Quarto Website <br>
-    Trap data sourced from trap.nz
-
+    Trap data sourced from <a href="https://trap.nz" target="_blank">trap.nz</a>
+    <div class="source-link-container"><img src="images/GitHub-Mark-32px.png" alt="github logo" /> see <a href="https://github.com/kaitakeranges/kaitakeranges.github.io" target="_blank" >repository</a> on GitHub</div>
 format:
   html:
     theme:

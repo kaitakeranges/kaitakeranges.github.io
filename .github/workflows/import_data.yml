@@ -1,4 +1,4 @@
-name: Scheduled ETL
+name: Scheduled ETL Dataload
 
 on:
   schedule:
