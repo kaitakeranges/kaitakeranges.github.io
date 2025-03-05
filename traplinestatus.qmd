@@ -15,8 +15,8 @@ format: html
 <h2 style="text-align:centre;">Trap Line Status</h2>
 The target is to have traps checked every 2 weeks. The table below uses colour coding of;
 <ul type = "dot">
-  <li>14 Days: green</li>
-  <li>28 Days: yellow</li>
+  <li>less than 14 Days: green</li>
+  <li>14 - 28 Days: yellow</li>
   <li>28+ Days: red</li>
 </ul>
 Expand any trap line to see who most recently checked, and when.
