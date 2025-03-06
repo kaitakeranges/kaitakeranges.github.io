@@ -14,7 +14,13 @@ title: "Kaitake Ranges Conservation Trust"
   The <a href="https://www.facebook.com/kaitakeconservation/" target="_blank">Kaitake Ranges Conservation Trust</a> is a community volunteer group that help manage and run the stoat and ferret trapping network in the <a href="https://en.wikipedia.org/wiki/Kaitake_Range" target="_blank">Kaitake Ranges</a>, which are the northern most part of Te Papakura o Taranaki/Egmont National Park.
 </p>
 <p>
-  This website is used to surface the catch data that we record in a way to make it easily accessible and useful to our members. New data is loaded nightly into this site for display. These flags indicate if the load process is working:
+  This website is used to surface the catch data that we record in a way to make it easily accessible and useful to our members. New data is loaded every day; the last refresh was: <b>`{r} print(strftime(readRDS('date_refreshed.rds'), "%d-%m-%Y %H:%M"))`</b>.
+  
+```{r}
+#| echo: false
+#| results: asis
+```
+  These flags indicate if the load process is working:
 </p>
 <p class="d-flex justify-content-center">
   <img src="https://github.com/kaitakeranges/kaitakeranges.github.io/actions/workflows/import_data.yml/badge.svg" alt="ETL workflow status badge" style="margin-right: 10px" />
