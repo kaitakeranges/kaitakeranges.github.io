@@ -54,7 +54,7 @@ if(is.null(startindex) || startindex == 0) {
    if(exists("df_trap_records")){rm("df_trap_records")}
 }
 
-df_trap_records <- readRDS("df_trap_records.rds")
+#df_trap_records <- readRDS("df_trap_records.rds")
 
 count <- 5000
 
@@ -223,6 +223,7 @@ repeat {
        Trapper == "Mdixon" ~ "M Dixon",
        Trapper == "taranakimounga" ~ "Taranaki Mounga Project",
        Trapper == "cblencowe" ~ "Cameron Blencowe",
+       Trapper == "gabriel.lennon" ~ "Gabriel Lennon",
        TRUE ~ Trapper
      )) |>
     mutate(
@@ -406,6 +407,29 @@ if(exists("trap_line_summary")){rm("trap_line_summary")}
 # Create dataframe for trapstatus.qmd ----
 date_today <- readRDS("date_refreshed.rds")
 
+df_trap_info <- readRDS("df_trap_records.rds") %>% 
+  filter(! trap_type %in% c('Unspecified', 'A24', 'Blitz', 'SA Cat', 'Rewild F-bomb')) %>% 
+  drop_na(line) %>% 
+  distinct(line, trap_id, longitude, latitude) %>% 
+  count(line, name = "no_traps")
+
+df_traps_checked <- readRDS("df_trap_records.rds") %>% 
+  filter(! trap_type %in% c('Unspecified', 'A24', 'Blitz', 'SA Cat', 'Rewild F-bomb')) %>% 
+  drop_na(line) %>%
+  mutate(record_date = as.Date(record_date)) %>% 
+  distinct(line, trap_id, record_date) %>% 
+  count(line, record_date, name = "checks")
+
+df_traps_checked <- df_traps_checked %>% 
+  left_join(df_trap_info, by = "line") %>% 
+  mutate(pct_checked = checks / no_traps)
+
+df_line_checked <- df_traps_checked %>% 
+  filter(pct_checked > 0.5) %>% 
+  group_by(line, no_traps) %>% 
+  summarise(last_over_half = max(record_date), .groups = "drop") %>% 
+  mutate(days_since_over_half = as.numeric(as.Date(today()) - as.Date(last_over_half)))
+
 df_trap_status_2 <- readRDS("df_trap_records.rds") |>
   drop_na(line) |>
   filter(! trap_type %in% c('Unspecified', 'A24', 'Blitz', 'SA Cat', 'Rewild F-bomb')) |>
@@ -418,14 +442,28 @@ df_trap_status_2 <- readRDS("df_trap_records.rds") |>
   ) |>
   mutate(record_date = as.Date(record_date)) |>
   mutate(days_since = as.numeric(as.Date(date_today) - as.Date(record_date))) |>
-  select(line, Trapper_anon, record_date, days_since, species_level_2) |>
+  select(line, trap_code, Trapper_anon, record_date, days_since, species_level_2) |>
   group_by(line, Trapper_anon, record_date, days_since) |>
   summarize(
     traps = n(),
     rats = sum(species_level_2 == "Rat"),
     mustelids = sum(species_level_2 == "Mustelid")
   ) |>
-  arrange(line, desc(record_date))
+  arrange(line, desc(record_date)) %>% 
+  left_join(df_line_checked, by = "line") %>% 
+  select(
+    line,
+    no_traps,
+    last_over_half,
+    days_since_over_half,
+    Trapper_anon,
+    record_date,
+    days_since,
+    traps,
+    rats,
+    mustelids
+  ) %>% 
+  arrange(line, desc(last_over_half), desc(record_date))
 
 generate_icons <- function(count, icon_path, title) {
   if (count > 0) {

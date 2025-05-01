@@ -1,8 +1,8 @@
 ---
 title: "Trap Line Status"
 subtitle: |
-  `r paste('Last data refresh:', strftime(readRDS('date_refreshed.rds')))` <br>
-  `r paste('Latest trap record:', readRDS('date_trap_status.rds'))`
+  `r paste('Last refresh: ', strftime(readRDS('date_refreshed.rds')))` <br>
+  `r paste('Last record:  ', readRDS('date_trap_status.rds'))`
 format: html
 ---
 ::: {.grid}
@@ -13,7 +13,7 @@ format: html
   
 ::: {.g-col-12 .g-col-lg-6}
 <h2 style="text-align:centre;">Trap Line Status</h2>
-The target is to have traps checked every 2 weeks. The table below uses colour coding of;
+The target is to have traps checked every 2 weeks. More than 50% of traps checked on a line is considered a minimum for the line status. The table below uses colour coding of;
 <ul type = "dot">
   <li>less than 14 Days: green</li>
   <li>14 - 28 Days: yellow</li>
@@ -46,9 +46,9 @@ reactable(
     style = JS(
       "function(rowInfo) {
           if (rowInfo.aggregated) {
-            if (rowInfo.values['days_since'] > 28)
+            if (rowInfo.values['days_since_over_half'] > 28)
               return { backgroundColor: '#f8d7da', color: '#721c24' , borderRight : '1px solid rgba(255, 255, 255, 1)'};
-            else if (rowInfo.values['days_since'] > 14)
+            else if (rowInfo.values['days_since_over_half'] > 14)
               return { backgroundColor: '#fff3cd', color: '#856404' , borderRight : '1px solid rgba(255, 255, 255, 1)'};
             else
               return { backgroundColor: '#d4edda', color: '#155724', borderRight : '1px solid rgba(255, 255, 255, 1)' };
@@ -56,13 +56,55 @@ reactable(
         return {}
       }"
     )),
-    record_date = colDef(aggregate = "max", name = "Date Checked", minWidth = 90, maxWidth = 90, headerStyle = list(backgroundColor = '#047C90', color= '#d2e3f3'),
+    no_traps = colDef(aggregate = "max", name = "No Traps", minWidth = 80, maxWidth = 80, headerStyle = list(backgroundColor = '#047C90', color= '#d2e3f3'),
     style = JS(
       "function(rowInfo) {
           if (rowInfo.aggregated) {
-            if (rowInfo.values['days_since'] > 28)
+            if (rowInfo.values['days_since_over_half'] > 28)
+              return { backgroundColor: '#f8d7da', color: '#721c24' , borderRight : '1px solid rgba(255, 255, 255, 1)'};
+            else if (rowInfo.values['days_since_over_half'] > 14)
+              return { backgroundColor: '#fff3cd', color: '#856404' , borderRight : '1px solid rgba(255, 255, 255, 1)'};
+            else
+              return { backgroundColor: '#d4edda', color: '#155724', borderRight : '1px solid rgba(255, 255, 255, 1)' };
+          }
+        return {}
+      }"
+    )),    
+    last_over_half = colDef(aggregate = "max", name = "Last Checked (+50% Traps)", minWidth = 100, maxWidth = 100, headerStyle = list(backgroundColor = '#047C90', color= '#d2e3f3'),
+    style = JS(
+      "function(rowInfo) {
+          if (rowInfo.aggregated) {
+            if (rowInfo.values['days_since_over_half'] > 28)
+              return { backgroundColor: '#f8d7da', color: '#721c24' , borderRight : '1px solid rgba(255, 255, 255, 1)'};
+            else if (rowInfo.values['days_since_over_half'] > 14)
+              return { backgroundColor: '#fff3cd', color: '#856404' , borderRight : '1px solid rgba(255, 255, 255, 1)'};
+            else
+              return { backgroundColor: '#d4edda', color: '#155724', borderRight : '1px solid rgba(255, 255, 255, 1)' };
+          }
+        return {}
+      }"
+    )),
+    days_since_over_half = colDef(aggregate = "max", name = "Days Since Checked (+50% Traps)", minWidth = 100, maxWidth = 100, headerStyle = list(backgroundColor = '#047C90', color= '#d2e3f3'),
+    style = JS(
+      "function(rowInfo) {
+          if (rowInfo.aggregated) {
+            if (rowInfo.values['days_since_over_half'] > 28)
+              return { backgroundColor: '#f8d7da', color: '#721c24' , borderRight : '1px solid rgba(255, 255, 255, 1)'};
+            else if (rowInfo.values['days_since_over_half'] > 14)
+              return { backgroundColor: '#fff3cd', color: '#856404' , borderRight : '1px solid rgba(255, 255, 255, 1)'};
+            else
+              return { backgroundColor: '#d4edda', color: '#155724', borderRight : '1px solid rgba(255, 255, 255, 1)' };
+          }
+        return {}
+      }"
+    )),
+    record_date = colDef(name = "Date Checked", minWidth = 90, maxWidth = 90, headerStyle = list(backgroundColor = '#047C90', color= '#d2e3f3'),
+    style = JS(
+      "function(rowInfo) {
+          if (rowInfo.aggregated) {
+            if (rowInfo.values['days_since_over_half'] > 28)
               return { backgroundColor: '#f8d7da', color: '#721c24', borderRight : '1px solid rgba(255, 255, 255, 1)' };
-            else if (rowInfo.values['days_since'] > 14)
+            else if (rowInfo.values['days_since_over_half'] > 14)
               return { backgroundColor: '#fff3cd', color: '#856404', borderRight : '1px solid rgba(255, 255, 255, 1)' };
             else
               return { backgroundColor: '#d4edda', color: '#155724', borderRight : '1px solid rgba(255, 255, 255, 1)' };
@@ -70,13 +112,13 @@ reactable(
       return { backgroundColor: '#047C90', color: '#d2e3f3', borderRight : '1px solid rgba(255, 255, 255, 1)'}
       }"
     )),
-    days_since = colDef(aggregate = "min", name = "Days Since Checked", minWidth = 90, maxWidth = 100, headerStyle = list(backgroundColor = '#047C90', color= '#d2e3f3'),
+    days_since = colDef(name = "Days Since Checked", minWidth = 90, maxWidth = 100, headerStyle = list(backgroundColor = '#047C90', color= '#d2e3f3'),
       style = JS(
         "function(rowInfo) {
             if (rowInfo.aggregated) {
-              if (rowInfo.values['days_since'] > 28)
+              if (rowInfo.values['days_since_over_half'] > 28)
                 return { backgroundColor: '#f8d7da', color: '#721c24', borderRight : '1px solid rgba(255, 255, 255, 1)' };
-              else if (rowInfo.values['days_since'] > 14)
+              else if (rowInfo.values['days_since_over_half'] > 14)
                 return { backgroundColor: '#fff3cd', color: '#856404', borderRight : '1px solid rgba(255, 255, 255, 1)' };
               else
                 return { backgroundColor: '#d4edda', color: '#155724', borderRight : '1px solid rgba(255, 255, 255, 1)' };
@@ -84,13 +126,13 @@ reactable(
         return { backgroundColor: '#047C90', color: '#d2e3f3', borderRight : '1px solid rgba(255, 255, 255, 1)'}
         }"
     )),
-    traps = colDef(aggregate = "max", name = "No. Traps", minWidth = 80, maxWidth = 80, headerStyle = list(backgroundColor = '#047C90', color= '#d2e3f3'),
+    traps = colDef(name = "Checks", minWidth = 80, maxWidth = 80, headerStyle = list(backgroundColor = '#047C90', color= '#d2e3f3'),
       style = JS(
         "function(rowInfo) {
             if (rowInfo.aggregated) {
-              if (rowInfo.values['days_since'] > 28)
+              if (rowInfo.values['days_since_over_half'] > 28)
                 return { backgroundColor: '#f8d7da', color: '#721c24', borderRight : '1px solid rgba(255, 255, 255, 1)' };
-              else if (rowInfo.values['days_since'] > 14)
+              else if (rowInfo.values['days_since_over_half'] > 14)
                 return { backgroundColor: '#fff3cd', color: '#856404', borderRight : '1px solid rgba(255, 255, 255, 1)' };
               else
                 return { backgroundColor: '#d4edda', color: '#155724', borderRight : '1px solid rgba(255, 255, 255, 1)' };
@@ -118,7 +160,7 @@ reactable(
           }"
         ))
   ),
-  defaultSorted = list("days_since" = "asc", "record_date" = "asc"),
+  defaultSorted = list("days_since_over_half" = "asc", "record_date" = "desc"),
   theme = reactableTheme(
     tableStyle = list(className = "trapstatus-reactable")
   )
