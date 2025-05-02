@@ -54,7 +54,7 @@ if(is.null(startindex) || startindex == 0) {
    if(exists("df_trap_records")){rm("df_trap_records")}
 }
 
-#df_trap_records <- readRDS("df_trap_records.rds")
+df_trap_records <- readRDS("df_trap_records.rds")
 
 count <- 5000
 
@@ -493,6 +493,26 @@ df_trap_status_2 <- df_trap_status_2 %>%
     Mustelid_Icons = sapply(mustelids, generate_icons, icon_path = "/stoat.svg", title=generate_title(mustelids,rats)),
     Rat_Icons = sapply(rats, generate_icons, icon_path = "/rat.svg", title=generate_title(mustelids,rats)),
     Catch_Icons = paste0(Mustelid_Icons, Rat_Icons)
+  ) %>% 
+  mutate(
+    line_map = case_when(last_over_half == record_date ~ sprintf('<img src="%s" style="height:100px;width:100px;margin-right:2px;" title="%s" />', paste0("/",line, ".svg"), line),
+                         TRUE ~ "")
+  ) %>% 
+  select(
+    line,
+    line_map,
+    no_traps,
+    last_over_half,
+    days_since_over_half,
+    Trapper_anon,
+    record_date,
+    days_since,
+    traps,
+    rats,
+    mustelids,
+    Mustelid_Icons,
+    Rat_Icons,
+    Catch_Icons
   )
 
 saveRDS(df_trap_status_2, file = "df_trap_status_2.rds")

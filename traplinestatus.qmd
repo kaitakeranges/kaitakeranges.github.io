@@ -67,7 +67,7 @@ reactable(
             else
               return { backgroundColor: '#d4edda', color: '#155724', borderRight : '1px solid rgba(255, 255, 255, 1)' };
           }
-        return {}
+        return { backgroundColor: '#ffffff', color: '#ffffff'}
       }"
     )),    
     last_over_half = colDef(aggregate = "max", name = "Last Checked (+50% Traps)", minWidth = 100, maxWidth = 100, headerStyle = list(backgroundColor = '#047C90', color= '#d2e3f3'),
@@ -81,7 +81,7 @@ reactable(
             else
               return { backgroundColor: '#d4edda', color: '#155724', borderRight : '1px solid rgba(255, 255, 255, 1)' };
           }
-        return {}
+        return { backgroundColor: '#ffffff', color: '#ffffff'}
       }"
     )),
     days_since_over_half = colDef(aggregate = "max", name = "Days Since Checked (+50% Traps)", minWidth = 100, maxWidth = 100, headerStyle = list(backgroundColor = '#047C90', color= '#d2e3f3'),
@@ -95,7 +95,7 @@ reactable(
             else
               return { backgroundColor: '#d4edda', color: '#155724', borderRight : '1px solid rgba(255, 255, 255, 1)' };
           }
-        return {}
+        return { backgroundColor: '#ffffff', color: '#ffffff'}
       }"
     )),
     record_date = colDef(name = "Date Checked", minWidth = 90, maxWidth = 90, headerStyle = list(backgroundColor = '#047C90', color= '#d2e3f3'),
@@ -158,6 +158,20 @@ reactable(
             else
               return {backgroundColor: '#047C90', color: '#d2e3f3', borderRight : '1px solid rgba(255, 255, 255, 1)'}
           }"
+        )),
+    line_map = colDef(aggregate = "max", name = "Map", minWidth = 55, html = TRUE, headerStyle = list(backgroundColor = '#047C90', color= '#d2e3f3'),
+        style = JS(
+        "function(rowInfo) {
+            if (rowInfo.aggregated) {
+              if (rowInfo.values['days_since_over_half'] > 28)
+                return { backgroundColor: '#f8d7da', color: '#721c24', borderRight : '1px solid rgba(255, 255, 255, 1)' };
+              else if (rowInfo.values['days_since_over_half'] > 14)
+                return { backgroundColor: '#fff3cd', color: '#856404', borderRight : '1px solid rgba(255, 255, 255, 1)' };
+              else
+                return { backgroundColor: '#d4edda', color: '#155724', borderRight : '1px solid rgba(255, 255, 255, 1)' };
+      }
+        return {}
+        }"
         ))
   ),
   defaultSorted = list("days_since_over_half" = "asc", "record_date" = "desc"),
