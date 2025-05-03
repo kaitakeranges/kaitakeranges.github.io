@@ -495,9 +495,10 @@ df_trap_status_2 <- df_trap_status_2 %>%
     Catch_Icons = paste0(Mustelid_Icons, Rat_Icons)
   ) %>% 
   mutate(
-    line_map = case_when(last_over_half == record_date ~ sprintf('<img src="%s" style="height:100px;width:100px;margin-right:2px;" title="%s" />', paste0("/",line, ".svg"), line),
+    line_map = case_when(last_over_half == record_date ~ sprintf('<img src="%s" style="height:100px;width:100px;margin-right:2px;" title="%s" />', paste0("/",trimws(line), ".png"), trimws(line)),
                          TRUE ~ "")
   ) %>% 
+  mutate(line = trimws(line)) %>% 
   select(
     line,
     line_map,

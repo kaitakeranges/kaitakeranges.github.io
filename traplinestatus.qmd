@@ -159,7 +159,7 @@ reactable(
               return {backgroundColor: '#047C90', color: '#d2e3f3', borderRight : '1px solid rgba(255, 255, 255, 1)'}
           }"
         )),
-    line_map = colDef(aggregate = "max", name = "Map", minWidth = 55, html = TRUE, headerStyle = list(backgroundColor = '#047C90', color= '#d2e3f3'),
+    line_map = colDef(aggregate = "max", name = "Map", minWidth = 105, html = TRUE, headerStyle = list(backgroundColor = '#047C90', color= '#d2e3f3'),
         style = JS(
         "function(rowInfo) {
             if (rowInfo.aggregated) {
@@ -170,7 +170,7 @@ reactable(
               else
                 return { backgroundColor: '#d4edda', color: '#155724', borderRight : '1px solid rgba(255, 255, 255, 1)' };
       }
-        return {}
+        return { backgroundColor: '#ffffff', color: '#ffffff'}
         }"
         ))
   ),
