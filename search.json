@@ -25,7 +25,7 @@
     "href": "traplinestatus.html",
     "title": "Trap Line Status",
     "section": "",
-    "text": "Trap Line Status\n\nThe target is to have traps checked every 2 weeks. More than 50% of traps checked on a line is considered a minimum for the line status. The table below uses colour coding of;\n\n\nless than 14 Days: green\n\n\n14 - 28 Days: yellow\n\n\n28+ Days: red\n\n\nExpand any trap line to see who most recently checked, and when.\n\n\n\n\n\n\n\n\n\n\nThis chart shows the cumulative number of traps checked within the last (x) days"
+    "text": "Trap Line Status\n\nThe target is to have traps checked every 2 weeks. More than 50% of traps checked on a line is considered a minimum for the line status. The table below uses colour coding of;\n\n\nless than 14 Days: green\n\n\n14 - 28 Days: yellow\n\n\n28+ Days: red\n\n\nExpand any trap line to see who most recently checked, and when.\n\n\n\n\n\n\n\n\n\n\nThe following map shows the age by which traps have been checked"
   },
   {
     "objectID": "index.html",
