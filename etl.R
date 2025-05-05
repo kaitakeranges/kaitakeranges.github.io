@@ -517,3 +517,31 @@ df_trap_status_2 <- df_trap_status_2 %>%
   )
 
 saveRDS(df_trap_status_2, file = "df_trap_status_2.rds")
+
+df_trap_checks <- df_trap_records %>% 
+  filter(trap_type %in% c('DOC 200', 'DOC 250')) %>% 
+  filter(line != "NA") %>% 
+  select(line,
+         trap_id,
+         longitude,
+         latitude,
+         trap_type,
+         record_date,
+         species_level_1
+  ) %>% 
+  group_by(trap_id) %>% 
+  filter(record_date == max(record_date)) %>% 
+  ungroup() %>% 
+  mutate(
+    days_since = as.numeric(as.Date(readRDS("date_refreshed.rds")) - as.Date(record_date))
+  ) %>% 
+  mutate(
+    color = case_when(
+      days_since <= 14 ~ "green",
+      days_since <= 21 ~ "orange",
+      TRUE ~ "red"
+    )
+  )
+
+saveRDS(df_trap_checks, file = "df_trap_checks.rds")
+

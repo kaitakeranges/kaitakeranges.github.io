@@ -159,7 +159,15 @@ reactable(
               return {backgroundColor: '#047C90', color: '#d2e3f3', borderRight : '1px solid rgba(255, 255, 255, 1)'}
           }"
         )),
-    line_map = colDef(aggregate = "max", name = "Map", minWidth = 105, html = TRUE, headerStyle = list(backgroundColor = '#047C90', color= '#d2e3f3'),
+    line_map = colDef(aggregate = "max", name = "Map", 
+                      cell = function(value, index, name, row){
+                        if (!is.null(row) && !is.null(row$.grouped) && row$.grouped) {
+                          max(df_trap_status_2$line_map[df_trap_status_2$map == row$map])
+                        } else{
+                          ""
+                        }
+                      },
+                      minWidth = 105, html = TRUE, headerStyle = list(backgroundColor = '#047C90', color= '#d2e3f3'),
         style = JS(
         "function(rowInfo) {
             if (rowInfo.aggregated) {
@@ -184,5 +192,42 @@ reactable(
 
 <hr style="border: 1px '#d2e3f3';">
 
-This chart shows the cumulative number of traps checked within the last (x) days
+The following map shows the age by which traps have been checked
 <br />
+
+```{r, echo=FALSE, warning = FALSE, message = FALSE}
+library(ggplot2)
+library(dplyr)
+
+
+df_trap_checks <- readRDS("df_trap_checks.rds")
+
+trap_status_map <- ggplot(
+  data = df_trap_checks,
+  aes(x = longitude, y = latitude),
+  color = "grey"
+) + geom_point() +
+  geom_point(
+    data = df_trap_checks %>% filter(color == "green"),
+    aes(x = longitude, y = latitude),
+    color = "green", size = 2
+  ) +
+  geom_point(
+    data = df_trap_checks %>% filter(color == "orange"),
+    aes(x = longitude, y = latitude),
+    color = "orange", size = 2
+  ) +
+  geom_point(
+    data = df_trap_checks %>% filter(color == "red"),
+    aes(x = longitude, y = latitude),
+    color = "red", size = 2
+  ) +
+  theme_void() +
+  ggtitle("Traps Check Status") +
+  theme(
+    panel.background = element_rect(fill = "grey"),
+    plot.title = element_text(size = 22, hjust = 0.5)
+  ) 
+
+trap_status_map
+```
