@@ -8,7 +8,6 @@ format: html
 
 This table gives some summary information for each trap within the trapping project.</br>
 You can use the search box below each column header to filter on a specific item (e.g. a specific trap line, trap, date or last species caught).</br>
-There is also a generic search box which will search any column.</br>
 </br>
 Clicking on any of the column headers will allow you to sort. Keep clicking to toggle between ascending or descending.</br>
 If you want to sort by more than one column, hold the shift button down when clicking any subsequent columns.</br>

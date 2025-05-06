@@ -39,7 +39,7 @@
     "href": "traplinestatus.html",
     "title": "Trap Line Status",
     "section": "",
-    "text": "Trap Line Status\n\nThe target is to have traps checked every 2 weeks. More than 50% of traps checked on a line is considered a minimum for the line status. The table below uses colour coding of;\n\n\nless than 14 Days: green\n\n\n14 - 28 Days: yellow\n\n\n28+ Days: red\n\n\nExpand any trap line to see who most recently checked, and when.\n\n\n\n\n\n\n\n\n\n\nThe following map shows the age by which traps have been checked"
+    "text": "Trap Line Status\n\nThe target is to have traps checked every 2 weeks. More than 50% of traps checked on a line is considered a minimum for the line status. The table below uses colour coding of;\n\n\nless than 14 Days: green\n\n\n14 - 28 Days: yellow\n\n\n28+ Days: red\n\n\nExpand any trap line to see who most recently checked, and when."
   },
   {
     "objectID": "catchsummary.html",
@@ -53,7 +53,7 @@
     "href": "trapsummary.html",
     "title": "Trap Summary",
     "section": "",
-    "text": "This table gives some summary information for each trap within the trapping project. You can use the search box below each column header to filter on a specific item (e.g. a specific trap line, trap, date or last species caught). There is also a generic search box which will search any column.  Clicking on any of the column headers will allow you to sort. Keep clicking to toggle between ascending or descending. If you want to sort by more than one column, hold the shift button down when clicking any subsequent columns. Keep holding the shift button down if you want to reverse the sort order.  Examples on how you might use this table include;\n\n\nSearch for your trap line\n\n\nSort by last species caught (or use the search filter again) to find which traps catch the most or least of any species\n\n\nSort by last catch date to see which traps have caught recently and what species that was\n\n\nSort by days since last catch to see which traps haven’t had a recent catch\n\n\n You can expand the number of rows with the ‘Show’ drop down selection at the bottom of the table."
+    "text": "This table gives some summary information for each trap within the trapping project. You can use the search box below each column header to filter on a specific item (e.g. a specific trap line, trap, date or last species caught).  Clicking on any of the column headers will allow you to sort. Keep clicking to toggle between ascending or descending. If you want to sort by more than one column, hold the shift button down when clicking any subsequent columns. Keep holding the shift button down if you want to reverse the sort order.  Examples on how you might use this table include;\n\n\nSearch for your trap line\n\n\nSort by last species caught (or use the search filter again) to find which traps catch the most or least of any species\n\n\nSort by last catch date to see which traps have caught recently and what species that was\n\n\nSort by days since last catch to see which traps haven’t had a recent catch\n\n\n You can expand the number of rows with the ‘Show’ drop down selection at the bottom of the table."
   },
   {
     "objectID": "traplinestatus.html#format-html",

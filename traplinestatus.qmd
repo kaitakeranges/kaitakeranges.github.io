@@ -56,7 +56,7 @@ reactable(
         return {}
       }"
     )),
-    no_traps = colDef(aggregate = "max", name = "No Traps", minWidth = 80, maxWidth = 80, headerStyle = list(backgroundColor = '#047C90', color= '#d2e3f3'),
+    no_traps = colDef(aggregate = "max", name = "No Traps", minWidth = 70, maxWidth = 70, headerStyle = list(backgroundColor = '#047C90', color= '#d2e3f3'),
     style = JS(
       "function(rowInfo) {
           if (rowInfo.aggregated) {
@@ -84,7 +84,7 @@ reactable(
         return { backgroundColor: '#ffffff', color: '#ffffff'}
       }"
     )),
-    days_since_over_half = colDef(aggregate = "max", name = "Days Since Checked (+50% Traps)", minWidth = 100, maxWidth = 100, headerStyle = list(backgroundColor = '#047C90', color= '#d2e3f3'),
+    days_since_over_half = colDef(aggregate = "max", name = "Days Since Checked (+50% Traps)", minWidth = 90, maxWidth = 90, headerStyle = list(backgroundColor = '#047C90', color= '#d2e3f3'),
     style = JS(
       "function(rowInfo) {
           if (rowInfo.aggregated) {
@@ -192,7 +192,6 @@ reactable(
 
 <hr style="border: 1px '#d2e3f3';">
 
-The following map shows the age by which traps have been checked
 <br />
 
 ```{r, echo=FALSE, warning = FALSE, message = FALSE}
@@ -201,6 +200,8 @@ library(dplyr)
 
 
 df_trap_checks <- readRDS("df_trap_checks.rds")
+
+df_trap_checks$tempvar <- "Traps Check Status"
 
 trap_status_map <- ggplot(
   data = df_trap_checks,
@@ -222,12 +223,12 @@ trap_status_map <- ggplot(
     aes(x = longitude, y = latitude),
     color = "red", size = 2
   ) +
+  labs(caption = "Age by which traps have been checked") +
   theme_void() +
-  ggtitle("Traps Check Status") +
-  theme(
-    panel.background = element_rect(fill = "grey"),
-    plot.title = element_text(size = 22, hjust = 0.5)
-  ) 
+  theme(panel.background = element_rect(fill = "lightgrey")) +
+  facet_grid(. ~tempvar) +
+  theme(strip.background = element_rect(fill = "#053660", color = "#053660"),
+        strip.text = element_text(size = 16, color = "#d2e3f3"))
 
 trap_status_map
 ```
