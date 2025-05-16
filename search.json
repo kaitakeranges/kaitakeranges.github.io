@@ -1,17 +1,10 @@
 [
   {
-    "objectID": "catchsummary.html",
-    "href": "catchsummary.html",
-    "title": "Catch Summary",
+    "objectID": "traplinestatus.html",
+    "href": "traplinestatus.html",
+    "title": "Trap Line Status",
     "section": "",
-    "text": "A Summary of catches by year, and also the last 2 and 4 weeks with comparison to the 2 and 4 week windows for the same time of year from the prior year."
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "About this site\n\n1 + 1\n\n[1] 2"
+    "text": "Trap Line Status\n\nThe target is to have traps checked every 2 weeks. More than 50% of traps checked on a line is considered a minimum for the line status. The table below uses colour coding of;\n\n\nless than 14 Days: green\n\n\n14 - 28 Days: yellow\n\n\n28+ Days: red\n\n\nExpand any trap line to see who most recently checked, and when."
   },
   {
     "objectID": "trapsummary.html",
@@ -21,17 +14,24 @@
     "text": "This table gives some summary information for each trap within the trapping project. You can use the search box below each column header to filter on a specific item (e.g. a specific trap line, trap, date or last species caught).  Clicking on any of the column headers will allow you to sort. Keep clicking to toggle between ascending or descending. If you want to sort by more than one column, hold the shift button down when clicking any subsequent columns. Keep holding the shift button down if you want to reverse the sort order.  Examples on how you might use this table include;\n\n\nSearch for your trap line\n\n\nSort by last species caught (or use the search filter again) to find which traps catch the most or least of any species\n\n\nSort by last catch date to see which traps have caught recently and what species that was\n\n\nSort by days since last catch to see which traps haven’t had a recent catch\n\n\n You can expand the number of rows with the ‘Show’ drop down selection at the bottom of the table."
   },
   {
-    "objectID": "traplinestatus.html",
-    "href": "traplinestatus.html",
-    "title": "Trap Line Status",
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
     "section": "",
-    "text": "Trap Line Status\n\nThe target is to have traps checked every 2 weeks. More than 50% of traps checked on a line is considered a minimum for the line status. The table below uses colour coding of;\n\n\nless than 14 Days: green\n\n\n14 - 28 Days: yellow\n\n\n28+ Days: red\n\n\nExpand any trap line to see who most recently checked, and when."
+    "text": "About this site\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "catchsummary.html",
+    "href": "catchsummary.html",
+    "title": "Catch Summary",
+    "section": "",
+    "text": "A Summary of catches by year, and also the last 2 and 4 weeks with comparison to the 2 and 4 week windows for the same time of year from the prior year."
   },
   {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Kaitake Ranges Conservation Trust",
     "section": "",
-    "text": "The Kaitake Ranges Conservation Trust is a community volunteer group that help manage and run the stoat and ferret trapping network in the Kaitake Ranges, which are the northern most part of Te Papakura o Taranaki/Egmont National Park.\n\n\nThis website is used to surface the catch data that we record in a way to make it easily accessible and useful to our members. New data is loaded every day; the last refresh was: 16-05-2025 07:51.\nThese flags indicate if the load process is working:\n\n\n \n\n\nThe site is made up of these sections:\n\n\nCatch Summary: An overall summary of catches over time\n\n\nTrap Summary: An interactive table for interrogating the status of traps and how well each trap is doing\n\n\nTrap Line Status: An interactive table showing servicing history by trap line and highlighing whether lines are overdue for checks"
+    "text": "The Kaitake Ranges Conservation Trust is a community volunteer group that help manage and run the stoat and ferret trapping network in the Kaitake Ranges, which are the northern most part of Te Papakura o Taranaki/Egmont National Park.\n\n\nThis website is used to surface the catch data that we record in a way to make it easily accessible and useful to our members. New data is loaded every day; the last refresh was: 17-05-2025 07:50.\nThese flags indicate if the load process is working:\n\n\n \n\n\nThe site is made up of these sections:\n\n\nCatch Summary: An overall summary of catches over time\n\n\nTrap Summary: An interactive table for interrogating the status of traps and how well each trap is doing\n\n\nTrap Line Status: An interactive table showing servicing history by trap line and highlighing whether lines are overdue for checks"
   }
 ]
