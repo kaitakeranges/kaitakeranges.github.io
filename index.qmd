@@ -1,6 +1,4 @@
----
-title: "Kaitake Ranges Conservation Trust"
----
+
 
 ::: {.grid}
 
@@ -11,8 +9,16 @@ title: "Kaitake Ranges Conservation Trust"
 ::: {.g-col-12 .g-col-lg-6}
 
 <p>
+<span class="home-leadtext">
+  <span class="lead-accentuate">`{r} print(readRDS('df_count_last_year_active_trappers.rds'))`</span> active trappers checking <span class="lead-accentuate">`{r} print(readRDS('df_count_active_traps.rds'))`</span> traps over <span class="lead-accentuate">`{r} print(readRDS('df_count_trap_lines.rds'))`</span> trap lines.
+</span>
+<!--  things to add: trap count, checks, people involved over last year, number of trap lines -->
+  
+</p>
+<p>
   The <a href="https://www.facebook.com/kaitakeconservation/" target="_blank">Kaitake Ranges Conservation Trust</a> is a community volunteer group that help manage and run the stoat and ferret trapping network in the <a href="https://en.wikipedia.org/wiki/Kaitake_Range" target="_blank">Kaitake Ranges</a>, which are the northern most part of Te Papakura o Taranaki/Egmont National Park.
 </p>
+
 <p>
   This website is used to surface the catch data that we record in a way to make it easily accessible and useful to our members. New data is loaded every day; the last refresh was: <b>`{r} print(strftime(readRDS('date_refreshed.rds'), "%d-%m-%Y %H:%M"))`</b>.
   
