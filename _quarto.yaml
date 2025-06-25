@@ -5,12 +5,9 @@ project:
     port: 5999
 
 website:
-  title: "kaitakeranges.github.io"
+  title: "Kaitake Ranges Conservation Trust"
   navbar:
     left:
-      - text: "Home"
-        href: index.qmd
-        icon: house-door
       - text: "Catch Summary"
         href: catchsummary.qmd
         icon: file-bar-graph
