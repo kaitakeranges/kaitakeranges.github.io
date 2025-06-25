@@ -2,9 +2,9 @@
 
 // Sass Variables
 
-$theme-darkblue: #053660;
+$theme-darkblue: #27729d;
 $theme-lightblue: #d2e3f3;
-$theme-turqoise: #047C90;
+$theme-turqoise: #57A595;
 $theme-blue: #42affa;
 
 
@@ -105,6 +105,19 @@ $font-color: $theme-lightblue;
 
 .trapstatus-reactable .rt-expander{
     color: $theme-turqoise;
+}
+
+.home-leadtext {
+    font-size: 1.5em;
+    margin: 2em;
+    text-align: center;
+    display: block;
+    line-height: 1.75em;
+}
+
+.lead-accentuate {
+  font-size: 2em;
+  vertical-align: sub;
 }
 
 // .cell-output-display {
