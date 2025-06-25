@@ -6,7 +6,7 @@ subtitle: |
 format: html
 ---
 
-<h3>A Summary of catches by year, and also the last 2 and 4 weeks with comparison to the 2 and 4 week windows for the same time of year from the prior year.</h2>
+A Summary of catches by year, and also the last 2 and 4 weeks with comparison to the 2 and 4 week windows for the same time of year from the prior year.
 <hr style="border: 1px solid black;">
 
 ```{r, setup, echo=FALSE}

@@ -1,18 +1,11 @@
 ---
-title: "Trap Line Status"
+title: "Trapline Status"
 subtitle: |
   `r paste('Last refresh: ', strftime(readRDS('date_refreshed.rds')))` <br>
   `r paste('Last record:  ', readRDS('date_trap_status.rds'))`
 format: html
 ---
-::: {.grid}
 
-::: {.g-col-12 .g-col-lg-6}
-<img src="/Kaitake_Fungi_2.png" class="rounded-image mx-auto d-block" alt="photo of green mushrooms" />
-:::
-  
-::: {.g-col-12 .g-col-lg-6}
-<h2 style="text-align:centre;">Trap Line Status</h2>
 The target is to have traps checked every 2 weeks. More than 50% of traps checked on a line is considered a minimum for the line status. The table below uses colour coding of;
 <ul type = "dot">
   <li>less than 14 Days: green</li>
@@ -20,9 +13,7 @@ The target is to have traps checked every 2 weeks. More than 50% of traps checke
   <li>28+ Days: red</li>
 </ul>
 Expand any trap line to see who most recently checked, and when.
-:::
 
-:::
 
 
 <hr style="border: 1px '#d2e3f3';">
