@@ -545,3 +545,14 @@ df_trap_checks <- df_trap_records %>%
 
 saveRDS(df_trap_checks, file = "df_trap_checks.rds")
 
+# figure out how many active traps there currently are; exclude retired and external to the project
+count_active_traps <- length(unique(df_trap_status$trap_id[df_trap_status$project_id==708466][df_trap_status$retired==0]))
+saveRDS(count_active_traps, file = "df_count_active_traps.rds")
+
+# figure out how many active trappers there were in the last year
+count_last_year_active_trappers <- length(unique(df_trap_records$username[df_trap_records$record_date> (ymd(today) - days(365))]))
+saveRDS(count_last_year_active_trappers, file = "df_count_last_year_active_trappers.rds")
+
+# count the trap lines
+count_trap_lines <- length(unique(df_trap_status$line[df_trap_status$project_id==708466 & !is.na(df_trap_status$line) & df_trap_status$line!= '']))
+saveRDS(count_trap_lines, file = "df_count_trap_lines.rds")
