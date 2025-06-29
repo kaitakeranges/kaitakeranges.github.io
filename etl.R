@@ -44,6 +44,13 @@ rm("df_traps", "df_trap_points_list", "df_trap_points", "df_trap_properties") # 
 # For this end point, you can specify a number of records (max = 10,000) and a startindex.
 # So start with startindex of 0, then add 5,000 to this for each loop until the response != 200.
 
+# For a full data refresh, e.g. when historical data has been cleaned up startindex and df_trap_records must be cleared out
+# startindex <- 0
+# saveRDS(startindex, file="startindex.rds")
+# df_trap_records <- df_Trap_records[0,]
+# saveRDS(df_trap_records, file="df_trap_records.rds")
+
+
 startindex <- readRDS("startindex.rds")
 base_url <- 'https://io.trap.nz/geo/trapnz-projects/wfs/'
 end_url <- '?service=WFS&version=2.0.0&request=GetFeature&typeName=trapnz-projects:default-project-trap-records&outputFormat=json'
@@ -320,31 +327,61 @@ df_trap_table_1 <- df_trap_table |>
    summarise(count = n()) |>
    pivot_wider(names_from = species_level_1, values_from = count, values_fill = 0) |>
    mutate(period = as.character(year))
+   #ungroup()
 
 df_trap_table_2_columns <- c("last_14_days", "last_28_days", "last_14_days_ly", "last_28_days_ly")
 
+#df_trap_table_2 <- df_trap_table |>
+#   filter_at(vars(df_trap_table_2_columns), any_vars(. == 1)) |>
+#   pivot_longer(cols = df_trap_table_2_columns, names_to = "period", values_to = "flag") |>
+#   filter(flag == 1) |>
+#   group_by(period, species_level_1) |>
+#   summarise(count = n()) |>
+#   pivot_wider(names_from = species_level_1, values_from = count, values_fill = 0)
 df_trap_table_2 <- df_trap_table |>
-   filter_at(vars(df_trap_table_2_columns), any_vars(. == 1)) |>
-   pivot_longer(cols = df_trap_table_2_columns, names_to = "period", values_to = "flag") |>
-   filter(flag == 1) |>
-   group_by(period, species_level_1) |>
-   summarise(count = n()) |>
-   pivot_wider(names_from = species_level_1, values_from = count, values_fill = 0)
+  filter(if_any(all_of(df_trap_table_2_columns), ~ . == 1)) |>
+  pivot_longer(cols = all_of(df_trap_table_2_columns), names_to = "period", values_to = "flag") |>
+  filter(flag == 1) |>
+  group_by(period, species_level_1) |>
+  summarise(count = n(), .groups = "drop") |>
+  pivot_wider(names_from = species_level_1, values_from = count, values_fill = 0)
 
-df_trap_table_data <- rbind(df_trap_table_1, df_trap_table_2) |>
-   select(-year) |>
-   mutate(period = case_when(
-     period == "last_14_days" ~ "Last 2 Weeks",
-     period == "last_28_days" ~ "Last 4 Weeks",
-     period == "last_14_days_ly" ~ "Last 2 Weeks (last year)",
-     period == "last_28_days_ly" ~ "Last 4 Weeks (last year)",
-     TRUE ~ period
-   )) |>
-   arrange(desc(period)) |>
-   mutate_all((~replace(., is.na(.), 0))) |>
-   mutate(across(Cat:Possum, ~format(., big.mark = ","))) |>
-   arrange(factor(period, c("Last 2 Weeks", "Last 2 Weeks (last year)", "Last 4 Weeks", "Last 4 Weeks (last year)")))
-df_trap_table_data <- df_trap_table_data[, c("period", "None", "Rat", "Stoat", "Ferret", "Weasel", "Hedgehog", "Cat", "Other")]
+
+# df_trap_table_data <- rbind(df_trap_table_1, df_trap_table_2) |>
+#    select(-year) |>
+#    mutate(period = case_when(
+#      period == "last_14_days" ~ "Last 2 Weeks",
+#      period == "last_28_days" ~ "Last 4 Weeks",
+#      period == "last_14_days_ly" ~ "Last 2 Weeks (last year)",
+#      period == "last_28_days_ly" ~ "Last 4 Weeks (last year)",
+#      TRUE ~ period
+#    )) |>
+#    arrange(desc(period)) |>
+#    mutate_all((~replace(., is.na(.), 0))) |>
+#    mutate(across(Cat:Possum, ~format(., big.mark = ","))) |>
+#    arrange(factor(period, c("Last 2 Weeks", "Last 2 Weeks (last year)", "Last 4 Weeks", "Last 4 Weeks (last year)")))
+# df_trap_table_data <- df_trap_table_data[, c("period", "None", "Rat", "Stoat", "Ferret", "Weasel", "Hedgehog", "Cat", "Other")]
+df_trap_table_data <- bind_rows(
+  df_trap_table_1 |> ungroup(),
+  df_trap_table_2
+) |>
+  select(-year) |>
+  mutate(
+    period = case_when(
+      period == "last_14_days" ~ "Last 2 Weeks",
+      period == "last_28_days" ~ "Last 4 Weeks",
+      period == "last_14_days_ly" ~ "Last 2 Weeks (last year)",
+      period == "last_28_days_ly" ~ "Last 4 Weeks (last year)",
+      TRUE ~ period
+    )
+  ) |>
+  mutate(across(everything(), ~replace_na(., 0))) |>
+  mutate(across(Cat:Possum, ~format(., big.mark = ","))) |>
+  arrange(factor(
+    period,
+    c("Last 2 Weeks", "Last 2 Weeks (last year)", "Last 4 Weeks", "Last 4 Weeks (last year)")
+  )) |>
+  select(period, None, Rat, Stoat, Ferret, Weasel, Hedgehog, Cat, Other)
 
 saveRDS(df_trap_table_data, file = "df_trap_table_data.rds")
 
@@ -388,7 +425,7 @@ trap_line_summary <- df_trap_records |>
    summarise(
      "strikes" = sum(strikes),
      "time checked" = n(),
-     "ave_days_between" = ave(days_since)) |>
+     "ave_days_between" = mean(days_since)) |>
    ungroup() |>
    select(line, trap_code, strikes, ave_days_between, last_catch, last_species) |>
    mutate(
@@ -397,7 +434,7 @@ trap_line_summary <- df_trap_records |>
      days_last_catch = format(as.integer(as.Date(today()) - as.Date(last_catch)), big.mark = ",")) |>
    unique() |>
    drop_na(line) |>
-   left_join(trap_species_caught, by = join_by(trap_code == trap_code)) |>
+   left_join(trap_species_caught, by = join_by(trap_code == trap_code), multiple = "first") |>
    select(-trap_id)
 
 saveRDS(trap_line_table, file = "trap_line_table.rds")
@@ -550,7 +587,7 @@ count_active_traps <- length(unique(df_trap_status$trap_id[df_trap_status$projec
 saveRDS(count_active_traps, file = "df_count_active_traps.rds")
 
 # figure out how many active trappers there were in the last year
-count_last_year_active_trappers <- length(unique(df_trap_records$username[df_trap_records$record_date> (ymd(today) - days(365))]))
+count_last_year_active_trappers <- length(unique(df_trap_records$username[df_trap_records$record_date> (ymd(today()) - days(365))]))
 saveRDS(count_last_year_active_trappers, file = "df_count_last_year_active_trappers.rds")
 
 # count the trap lines
