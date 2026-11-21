@@ -1,6 +1,7 @@
 name: Scheduled ETL Dataload
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: "35 18 * * *"
 
