@@ -24,8 +24,8 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y \
-            libfontconfigl-dev \
-            livfreetype6-dev
+            libfontconfig1-dev \
+            libfreetype6-dev
 
       - name: Install R Dependencies
         uses: r-lib/actions/setup-renv@v2
